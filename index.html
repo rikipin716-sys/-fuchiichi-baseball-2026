@@ -1,12 +1,73 @@
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0; url=./戦績ダッシュボード2026.html">
-    <title>戦績ダッシュボード</title>
-  </head>
-  <body>
-    <p>ページを読み込んでいます...</p>
-    <p><a href="./戦績ダッシュボード2026.html">戦績ダッシュボード2026.html を開く</a></p>
-  </body>
-</html>
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>⚾ 不知火一ベースボール 2026 戦績ダッシュボード</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--w:#1fa36b;--l:#e5484d;--d:#f5a524;--navy:#1f3a6e;--ac:#3b6bc4;--bg:#eef2f8;--card:#fff;--tx:#18212c;--mu:#667487;--bd:#e1e7f0;--hv:#f4f7fc;--sel:#e9f0fd}
+[data-theme=dark]{--navy:#8fb2f5;--ac:#6c9bf0;--bg:#0f1520;--card:#18212e;--tx:#e8edf4;--mu:#98a6b8;--bd:#2a3647;--hv:#1e2938;--sel:#1e3254}
+*{box-sizing:border-box}body{margin:0;font-family:"Hiragino Sans", "Yu Gothic",Meiryo,sans-serif;background:var(--bg);color:var(--tx);line-height:1.5}
+header{background:linear-gradient(135deg,#1f3a6e,#3b6bc4);color:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+header h1{margin:0;font-size:21px}header p{margin:2px 0 0;opacity:.8;font-size:12px}
+.ic{border:1px solid #fff5;background:#fff2;color:#fff;border-radius:10px;padding:8px 12px;cursor:pointer;font-size:14px}
+.ctl{position:sticky;top:0;z-index:20;background:var(--bg);padding:10px 16px;border-bottom:1px solid var(--bd)}
+.ctl>div{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:flex;background:var(--bd);border-radius:12px;padding:3px}
+.seg button{border:0;background:none;padding:9px 18px;border-radius:10px;font-size:14px;cursor:pointer;color:var(--mu);font-weight:700}
+.seg button.on{background:var(--navy);color:var(--card)}
+select,input{padding:9px 11px;border-radius:10px;border:1px solid var(--bd);font-size:14px;background:var(--card);color:var(--tx)}
+.rs{margin-left:auto;border:0;background:none;color:var(--ac);cursor:pointer;font-size:13px;font-weight:700}
+main{max-width:1120px;margin:0 auto;padding:16px}
+.hero{display:grid;grid-template-columns:minmax(260px,1fr) 2fr;gap:14px;margin-bottom:14px}
+.card{background:var(--card);border-radius:14px;padding:16px;box-shadow:0 1px 4px #0001}
+.card h3{margin:0 0 10px;font-size:14px;color:var(--navy)}
+.big{display:flex;align-items:center;gap:12px}.big .cv{width:150px;height:150px;flex:none}
+.rec{font-size:30px;font-weight:800;line-height:1.2}.rec small{font-size:13px;color:var(--mu);font-weight:600;display:block}
+.form{margin-top:8px;font-size:12px;color:var(--mu)}
+.kp{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.k{background:var(--hv);border-radius:12px;padding:10px 12px}.k span{font-size:12px;color:var(--mu)}.k b{display:block;font-size:24px}.k i{font-style:normal;font-size:11px;color:var(--mu)}
+.hl{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:14px}
+.h{background:var(--card);border-radius:12px;padding:12px 14px;border-left:5px solid var(--ac);box-shadow:0 1px 4px #0001}.h span{font-size:12px;color:var(--mu)}.h b{display:block;font-size:18px}.h i{font-style:normal;font-size:12px;color:var(--mu)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;margin-bottom:14px}.wide{grid-column:1/-1}
+.cv{position:relative;height:250px}
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.t{border:2px solid var(--bd);border-radius:12px;padding:10px 12px;cursor:pointer;font-size:13px;transition:.15s}.t.on{border-color:var(--ac);background:var(--sel)}.t:hover{transform:translateY(-2px);border-color:var(--ac)}
+.t b{display:block;font-size:14px}.t em{font-style:normal;font-weight:700;color:var(--navy);display:block;min-height:19px}.t i{font-style:normal;color:var(--mu);font-size:12px}
+.pb{display:flex;height:7px;border-radius:4px;overflow:hidden;margin:6px 0 4px;background:var(--bd)}.pb u{display:block}
+.tb2{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;align-items:center}
+.chip{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:20px;padding:6px 14px;cursor:pointer;font-size:13px;font-weight:700}.chip.on{color:#fff;border-color:transparent}
+.chip[data-r="⚾"].on{background:var(--w)}.chip[data-r="⚾"].on{background:var(--w)}.chip[data-r="✌️"].on{background:var(--l)}.chip[data-r="✋"].on{background:var(--d)}
+.tw{max-height:480px;overflow:auto;border:1px solid var(--bd);border-radius:10px}
+table{width:100%;min-width:900px;border-collapse:collapse;font-size:13px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap;background:var(--card)}
+th{position:sticky;top:0;z-index:3;color:var(--mu);cursor:pointer;user-select:none}th:hover{color:var(--ac)}
+th:first-child,td:first-child{position:sticky;left:0;z-index:1}th:first-child{z-index:4}
+tbody tr:hover td{background:var(--hv)}td.o{max-width:230px;overflow:hidden;text-overflow:ellipsis}
+.sc{font-weight:800;font-variant-numeric:tabular-nums}
+.bd{display:inline-block;min-width:28px;text-align:center;border-radius:7px;color:#fff;font-weight:800;padding:1px 7px}.bd.⚾{background:var(--w)}.bd.✌️{background:var(--l)}.bd.✋{background:var(--d)}
+.tag{font-size:11px;padding:2px 8px;border-radius:8px;background:var(--sel);color:var(--navy);font-weight:700}.tag.p{background:#f5a52422;color:var(--d)}
+.empty{padding:30px;text-align:center;color:var(--mu)}.note{font-size:12px;color:var(--mu)}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.kp{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}header h1{font-size:17px}.seg button{padding:9px 13px}}
+</style></head><body>
+<header><div><h1>⚾ 不知火一ベースボール 2026 戦績ダッシュボード</h1><p>令和8年版ベースボール研究所レベル2026年😄</p></div><button class="ic" id="th">🌙 ダークモード</button></header>
+<div class="ctl"><div><div class="seg" id="ty"><button data-v="all" class="on">全試合</button><button data-v="o">主催試合</button><button data-v="p">参加試合</button></div>
+<select id="cat"><option value="">試合分類を選択</option></select><select id="tour" style="display:none"><option value="">対戦相手</option></select><button class="rs" id="rs">↻ リセット</button></div></div>
+<main>
+<div class="hero"><div class="card big"><div class="cv"><canvas id="c1"></canvas></div><div><div class="rec" id="rec"></div><div class="form" id="form"></div></div></div>
+<div class="card"><div class="kp" id="kp"></div></div></div>
+<div class="hl" id="hl"></div>
+<div class="card" id="tcw" style="display:none;margin-bottom:14px"><h3>🏨 対戦チーム別成績<br>内訳</h3><div class="tg" id="tg"></div></div>
+<div class="grid">
+<div class="card"><h3>試合ごとの勝敗</h3><div class="cv"><canvas id="c2"></canvas></div></div>
+<div class="card"><h3>イニング別得点</h3><div class="cv"><canvas id="c6"></canvas></div></div>
+<div class="card"><h3>試合ごと得点率</h3><div class="cv"><canvas id="c3"></canvas></div></div>
+<div class="card"><h3>対戦相手別試合</h3><div class="cv"><canvas id="c4"></canvas></div></div>
+<div class="card"><h3>攻撃別実績<br>（2イニング、2回で設定）</h3><div class="cv" id="c7h"><canvas id="c7"></canvas></div></div>
+<div class="card"><h3>得点・失点別成績</h3><div class="cv"><canvas id="c9"></canvas></div></div>
+<div class="card wide" id="c8w" style="display:none"><h3>対戦相手別試合</h3><div class="cv"><canvas id="c8"></canvas></div></div>
+<div class="card wide"><h3>2イニング別得点 <span class="note" id="cn"></span></h3>
+<div class="tb2"><button class="chip" data-r="⚾">⚾ 勝利</button><button class="chip" data-r="✌️">✌️ 敗戦</button><button class="chip" data-r="✋">✋ 引分</button><input id="q" type="search" placeholder="🔍 チーム名や対戦相手を検索"></div>
+<div class="tw"><table><thead><tr id="th2"></tr></thead><tbody id="tb"></tbody></table></div>
+<p class="note">📊データは過去データから自動で読み込まれています。各データの中には4/21、23-1試合1敗1分となっています。</p></div>
+</main>
+<script>
+const D={"g":[[2,15,"大阪ダッシュボード2026",✌️,2,8,"次世代の若手育成プロジェクト","",️57e0057e0...のようなフォーマット続きます…
+</script></body></html>
