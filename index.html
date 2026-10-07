@@ -4,267 +4,364 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>不知火一ベースボール 2026 戦績ダッシュボード</title>
-
-    <script>
-      // Chart.js に依存するスクリプトが先に動かないようにするため、
-      // ここでは外部 CDN を安全に読み込む。
-      window.addEventListener('DOMContentLoaded', function () {
-        if (typeof Chart === 'undefined') {
-          console.warn('Chart.js not loaded yet. Retrying...');
-          setTimeout(function () {
-            if (typeof Chart !== 'undefined') {
-              renderDashboard();
-            } else {
-              document.body.insertAdjacentHTML(
-                'beforeend',
-                '<div style="padding:24px;color:#c00;font-weight:700;">Chart.js の読み込みに失敗しました。ネット���ーク接続と CDN の状態を確認してください。</div>'
-              );
-            }
-          }, 500);
-        } else {
-          renderDashboard();
-        }
-      });
-    </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
-
     <style>
       :root {
-        --bg: #eaf0f8;
+        --bg: #eaf1f8;
         --panel: #ffffff;
-        --header1: #1f3a6e;
-        --header2: #3d6ad0;
-        --text: #1a2433;
-        --muted: #58708d;
-        --line: #dfe7f3;
-        --green: #2ea86a;
-        --red: #e94f4f;
-        --amber: #f3b336;
-        --blue: #3d6ad0;
+        --panel-soft: #f5f7fb;
+        --header1: #1E3B6F;
+        --header2: #3B6DC7;
+        --text: #1d2a38;
+        --muted: #5b6e87;
+        --line: #dfe8f1;
+        --navy: #1a2d52;
+        --blue: #2d6fe9;
+        --green: #2eae75;
+        --red: #e9575d;
+        --amber: #f3b545;
+        --shadow: rgba(25, 38, 55, 0.08);
       }
 
       * { box-sizing: border-box; }
 
-      body {
+      html, body {
         margin: 0;
         background: var(--bg);
         color: var(--text);
-        font-family: "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+        font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
       }
 
-      .shell {
-        max-width: 1200px;
+      body {
+        min-height: 100vh;
+      }
+
+      .app {
+        width: min(100%, 1000px);
         margin: 0 auto;
-        padding: 20px 16px 40px;
+        background: var(--bg);
+        padding: 0 0 28px;
       }
 
-      .topbar {
+      .statusbar {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 18px 20px;
-        border-radius: 18px;
-        background: linear-gradient(135deg, var(--header1), var(--header2));
-        color: white;
-        box-shadow: 0 8px 22px rgba(16, 35, 80, 0.12);
+        height: 52px;
+        padding: 0 18px 0 16px;
+        color: #2f2f2f;
+        font-size: 0.95rem;
+        font-weight: 700;
       }
 
-      .title {
+      .statusbar .right {
         display: flex;
-        flex-direction: column;
-        gap: 4px;
+        align-items: center;
+        gap: 16px;
       }
 
-      .title h1 {
-        margin: 0;
-        font-size: clamp(1.2rem, 2vw, 2.2rem);
-        line-height: 1.2;
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        background: linear-gradient(135deg, var(--header1), var(--header2));
+        color: #fff;
+        border-radius: 18px 18px 14px 14px;
+        padding: 20px 20px 18px;
+        margin: 0 14px;
+        box-shadow: 0 6px 18px rgba(20, 34, 62, 0.12);
       }
 
-      .title small {
-        font-size: 0.9rem;
-        opacity: 0.9;
+      .header-title {
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        line-height: 1.1;
       }
 
-      .theme-toggle {
-        border: none;
-        background: rgba(255,255,255,0.18);
-        color: white;
-        border-radius: 12px;
-        padding: 10px 16px;
+      .header-title .main {
+        font-size: clamp(1.8rem, 3vw, 3rem);
+        display: block;
+      }
+
+      .header-title .sub {
+        font-size: 1rem;
+        opacity: 0.94;
+        margin-top: 6px;
+        display: block;
+      }
+
+      .theme-pill {
+        border: 0;
+        background: rgba(255,255,255,.18);
+        color: #fff;
+        border-radius: 14px;
+        padding: 12px 18px;
         font-size: 1.1rem;
+        cursor: pointer;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+      }
+
+      .controls {
+        margin: 16px 14px 0;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .seg {
+        display: flex;
+        align-items: center;
+        background: rgba(255,255,255,0.45);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 4px;
+        min-height: 48px;
+      }
+
+      .seg button {
+        border: 0;
+        background: transparent;
+        color: var(--navy);
+        font-size: 1.05rem;
+        font-weight: 700;
+        padding: 10px 22px;
+        border-radius: 12px;
         cursor: pointer;
       }
 
-      .stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 16px;
-        margin-top: 18px;
+      .seg button.active {
+        background: var(--navy);
+        color: #fff;
       }
 
-      .card {
-        background: var(--panel);
-        border-radius: 18px;
-        box-shadow: 0 6px 18px rgba(20, 32, 58, 0.08);
-        padding: 18px;
-      }
-
-      .mini-panel {
+      .filter {
+        margin-left: auto;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 12px;
+        gap: 14px;
       }
 
-      .mini-panel .label {
-        font-size: 0.8rem;
-        color: var(--muted);
+      .filter select {
+        appearance: none;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.7);
+        color: var(--navy);
+        border-radius: 12px;
+        height: 42px;
+        min-width: 180px;
+        padding: 0 40px 0 14px;
+        font-size: 1rem;
+        font-weight: 700;
       }
 
-      .mini-panel .value {
-        font-size: clamp(1.4rem, 3vw, 2.3rem);
-        line-height: 1.1;
-        font-weight: 800;
+      .reset {
+        border: 0;
+        background: transparent;
+        color: var(--blue);
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
       }
 
-      .chart-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 18px;
-        margin-top: 18px;
-      }
-
-      .chart-box {
-        background: var(--panel);
+      .panel {
+        margin: 18px 14px 0;
+        background: rgba(255,255,255,0.5);
+        border: 1px solid var(--line);
         border-radius: 18px;
+        min-height: 270px;
         padding: 18px;
-        box-shadow: 0 6px 18px rgba(20, 32, 58, 0.08);
+        position: relative;
       }
 
-      .chart-box h2 {
-        margin: 0 0 12px;
-        font-size: 1.1rem;
+      .chart-wrap {
+        width: 100%;
+        height: 240px;
       }
 
-      .chart-box canvas {
-        display: block;
-        width: 100% !important;
-        height: 260px !important;
+      .sub-panel {
+        margin: 18px 14px 0;
+        background: var(--panel-soft);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        min-height: 120px;
+        padding: 18px 20px 12px;
       }
 
-      .note {
+      .section-title {
+        font-size: clamp(1.8rem, 2.9vw, 3rem);
+        color: var(--navy);
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        margin: 0 0 8px;
+      }
+
+      .footer {
         margin-top: 18px;
         text-align: center;
         color: var(--muted);
         font-size: 0.9rem;
+        padding-bottom: 12px;
+      }
+
+      .footer a {
+        color: var(--navy);
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      @media (max-width: 720px) {
+        .statusbar {
+          padding-left: 10px;
+          padding-right: 10px;
+          font-size: 0.75rem;
+        }
+
+        .header {
+          margin: 0 8px;
+          padding: 16px 14px;
+        }
+
+        .header-title .main {
+          font-size: 1.5rem;
+        }
+
+        .controls {
+          margin-left: 8px;
+          margin-right: 8px;
+        }
+
+        .seg {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .seg button {
+          width: 100%;
+          padding-left: 6px;
+          padding-right: 6px;
+          font-size: 0.92rem;
+        }
+
+        .filter {
+          width: 100%;
+          justify-content: space-between;
+          margin-left: 0;
+        }
+
+        .filter select {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .panel, .sub-panel {
+          margin-left: 8px;
+          margin-right: 8px;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="shell">
-      <header class="topbar">
-        <div class="title">
-          <h1>⚾ 不知火一ベースボール 2026</h1>
-          <small>戦績ダッシュボード</small>
+    <div class="app">
+      <div class="statusbar">
+        <div>8:08</div>
+        <div class="right">
+          <span>◔</span>
+          <span>📶</span>
+          <span>83</span>
         </div>
-        <button class="theme-toggle" type="button" aria-label="テーマ切替">🌙</button>
+      </div>
+
+      <header class="header">
+        <div class="header-title">
+          <span class="main">不知火一ベースボール 2026</span>
+          <span class="sub">戦績ダッシュボード</span>
+          <span class="sub" style="opacity:.82; font-size:.95rem;">令和8年版ベースボール研究所レベル2026年</span>
+        </div>
+        <button class="theme-pill" type="button" aria-label="ダークモード">🌙</button>
       </header>
 
-      <section class="stats">
-        <div class="card mini-panel">
-          <div>
-            <div class="label">総試合数</div>
-            <div class="value" id="totalGames">0</div>
-          </div>
+      <div class="controls">
+        <div class="seg" aria-label="試合種類選択">
+          <button class="active" type="button">全試合</button>
+          <button type="button">主催試合</button>
+          <button type="button">参加試合</button>
         </div>
-        <div class="card mini-panel">
-          <div>
-            <div class="label">勝利</div>
-            <div class="value" id="wins">0</div>
-          </div>
-        </div>
-        <div class="card mini-panel">
-          <div>
-            <div class="label">敗北</div>
-            <div class="value" id="losses">0</div>
-          </div>
-        </div>
-        <div class="card mini-panel">
-          <div>
-            <div class="label">勝率</div>
-            <div class="value" id="winRate">0%</div>
-          </div>
-        </div>
-      </section>
 
-      <section class="chart-grid">
-        <div class="chart-box">
-          <h2>勝敗推移</h2>
-          <canvas id="lineChart"></canvas>
+        <div class="filter">
+          <select aria-label="試合分類選択">
+            <option>試合分類を選択</option>
+            <option>リーグ戦</option>
+            <option>親善試合</option>
+            <option>トーナメント</option>
+          </select>
+          <button class="reset" type="button">⟳ リセット</button>
         </div>
-        <div class="chart-box">
-          <h2>勝敗内訳</h2>
-          <canvas id="doughnutChart"></canvas>
-        </div>
-        <div class="chart-box">
-          <h2>月別得点 / 失点</h2>
-          <canvas id="barChart"></canvas>
-        </div>
-      </section>
+      </div>
 
-      <div class="note">GitHub Pages で Chart.js を安定して表示するように修正済みです。</div>
+      <div class="panel">
+        <div class="chart-wrap">
+          <canvas id="topChart"></canvas>
+        </div>
+      </div>
+
+      <div class="sub-panel">
+        <h2 class="section-title">試合ごとの勝敗</h2>
+      </div>
+
+      <div class="footer">
+        <a href="https://rikipin716-sys.github.io/-fuchiichi-baseball-2026/">rikipin716-sys.github.io</a>
+      </div>
     </div>
 
     <script>
-      function renderDashboard() {
-        if (typeof Chart === 'undefined') {
-          console.error('Chart.js is not defined.');
+      function loadChartJs(onLoaded) {
+        if (window.Chart) {
+          onLoaded();
           return;
         }
 
-        const results = [
-          { month: '4月', wins: 2, losses: 1, runs: 18, allowed: 12 },
-          { month: '5月', wins: 3, losses: 2, runs: 26, allowed: 21 },
-          { month: '6月', wins: 4, losses: 1, runs: 32, allowed: 20 },
-          { month: '7月', wins: 3, losses: 2, runs: 27, allowed: 24 },
-          { month: '8月', wins: 5, losses: 1, runs: 38, allowed: 19 },
-          { month: '9月', wins: 4, losses: 2, runs: 35, allowed: 26 }
-        ];
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
+        script.onload = onLoaded;
+        script.onerror = function () {
+          console.error('Chart.js failed to load.');
+          const fallback = document.createElement('div');
+          fallback.style.padding = '24px';
+          fallback.style.color = '#c00';
+          fallback.style.fontWeight = '700';
+          fallback.textContent = 'Chart.js の読み込みに失敗しました。';
+          document.getElementById('topChart').replaceWith(fallback);
+        };
+        document.head.appendChild(script);
+      }
 
-        const totalGames = results.reduce((sum, item) => sum + item.wins + item.losses, 0);
-        const totalWins = results.reduce((sum, item) => sum + item.wins, 0);
-        const totalLosses = results.reduce((sum, item) => sum + item.losses, 0);
-        const winRate = totalGames ? ((totalWins / totalGames) * 100).toFixed(1) : '0.0';
+      function renderDashboard() {
+        const ctx = document.getElementById('topChart');
+        if (!ctx) return;
 
-        document.getElementById('totalGames').textContent = totalGames;
-        document.getElementById('wins').textContent = totalWins;
-        document.getElementById('losses').textContent = totalLosses;
-        document.getElementById('winRate').textContent = winRate + '%';
+        const labels = ['4月', '5月', '6月', '7月', '8月', '9月'];
+        const wins = [2, 3, 4, 3, 5, 4];
+        const losses = [1, 2, 1, 2, 1, 2];
 
-        const cumulative = [];
-        let running = 0;
-        results.forEach((entry) => {
-          running += entry.wins - entry.losses;
-          cumulative.push(running);
-        });
-
-        new Chart(document.getElementById('lineChart'), {
-          type: 'line',
+        new Chart(ctx, {
+          type: 'bar',
           data: {
-            labels: results.map((item) => item.month),
-            datasets: [{
-              label: '勝利数 - 敗北数',
-              data: cumulative,
-              borderColor: '#3d6ad0',
-              backgroundColor: 'rgba(61, 106, 208, 0.12)',
-              borderWidth: 3,
-              tension: 0.35,
-              fill: true,
-              pointRadius: 4,
-              pointBackgroundColor: '#3d6ad0'
-            }]
+            labels,
+            datasets: [
+              {
+                label: '勝ち',
+                data: wins,
+                backgroundColor: '#2eae75',
+                borderRadius: 8
+              },
+              {
+                label: '負け',
+                data: losses,
+                backgroundColor: '#e9575d',
+                borderRadius: 8
+              }
+            ]
           },
           options: {
             responsive: true,
@@ -273,98 +370,45 @@
               legend: { display: false }
             },
             scales: {
-              y: {
-                beginAtZero: false,
-                grid: { color: '#e7edf7' }
-              },
               x: {
-                grid: { display: false }
-              }
-            }
-          }
-        });
-
-        new Chart(document.getElementById('doughnutChart'), {
-          type: 'doughnut',
-          data: {
-            labels: ['勝利', '敗北'],
-            datasets: [{
-              data: [totalWins, totalLosses],
-              backgroundColor: ['#2ea86a', '#e94f4f'],
-              borderWidth: 0
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                position: 'bottom'
-              }
-            }
-          }
-        });
-
-        new Chart(document.getElementById('barChart'), {
-          type: 'bar',
-          data: {
-            labels: results.map((item) => item.month),
-            datasets: [
-              {
-                label: '得点',
-                data: results.map((item) => item.runs),
-                backgroundColor: '#3d6ad0'
+                grid: { display: false },
+                ticks: { color: '#56687e' }
               },
-              {
-                label: '失点',
-                data: results.map((item) => item.allowed),
-                backgroundColor: '#e94f4f'
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { position: 'bottom' }
-            },
-            scales: {
               y: {
                 beginAtZero: true,
-                grid: { color: '#e7edf7' }
-              },
-              x: {
-                grid: { display: false }
+                grid: { color: '#e6edf3' },
+                ticks: { color: '#56687e' }
               }
             }
           }
         });
-
-        const toggleButton = document.querySelector('.theme-toggle');
-        toggleButton.addEventListener('click', () => {
-          const root = document.documentElement;
-          const current = root.style.getPropertyValue('--bg');
-          if (current === '#0f1729') {
-            root.style.setProperty('--bg', '#eaf0f8');
-            root.style.setProperty('--panel', '#ffffff');
-            root.style.setProperty('--text', '#1a2433');
-            root.style.setProperty('--muted', '#58708d');
-            toggleButton.textContent = '🌙';
-          } else {
-            root.style.setProperty('--bg', '#0f1729');
-            root.style.setProperty('--panel', '#1b2431');
-            root.style.setProperty('--text', '#edf4ff');
-            root.style.setProperty('--muted', '#a8bed8');
-            toggleButton.textContent = '☀️';
-          }
-        });
       }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', renderDashboard);
-      } else {
-        renderDashboard();
-      }
+      loadChartJs(renderDashboard);
+
+      document.querySelector('.theme-pill').addEventListener('click', function () {
+        const root = document.documentElement;
+        const dark = getComputedStyle(root).getPropertyValue('--bg').trim() === '#111827';
+        if (dark) {
+          root.style.setProperty('--bg', '#eaf1f8');
+          root.style.setProperty('--panel', '#ffffff');
+          root.style.setProperty('--panel-soft', '#f5f7fb');
+          root.style.setProperty('--text', '#1d2a38');
+          root.style.setProperty('--muted', '#5b6e87');
+          root.style.setProperty('--line', '#dfe8f1');
+          root.style.setProperty('--navy', '#1a2d52');
+          this.textContent = '🌙';
+        } else {
+          root.style.setProperty('--bg', '#111827');
+          root.style.setProperty('--panel', '#1f2937');
+          root.style.setProperty('--panel-soft', '#111827');
+          root.style.setProperty('--text', '#edf5ff');
+          root.style.setProperty('--muted', '#a4b3c8');
+          root.style.setProperty('--line', '#2d3a4d');
+          root.style.setProperty('--navy', '#dfeeff');
+          this.textContent = '☀️';
+        }
+      });
     </script>
   </body>
 </html>
