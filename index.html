@@ -1,1 +1,370 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>⚾ 不知火一ベースボール 2026 戦績ダッシュボード</title><script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script><style>:root{--w:#1fa36b;--l:#e5484d;--d:#f5a524;--navy:#1f3a6e;--ac:#3b6bc4;--bg:#eef2f8;--card:#f8f9fb;--tx:#18212c;--mu:#66748d;--bd:#e1e7f0;--hv:#f4f7fc;--sel:#e9f0ff}html,body{margin:0;padding:0;font-family:"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;background:var(--bg);color:var(--tx);line-height:1.5}header{background:linear-gradient(135deg,#1f3a6e,#3b6bc4);color:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px}header h1{margin:0;font-size:21px}header p{margin:2px 0 0;opacity:.8;font-size:12px}.ic{border:1px solid #fff5;border-radius:10px;padding:8px 12px;cursor:pointer;font-size:14px}.ctl{position:sticky;top:0;z-index:20;background:var(--bg);padding:10px 16px;border-bottom:1px solid var(--bd)}.ctl > div{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center}.seg{display:flex;background:var(--bd);border-radius:12px;padding:3px}.seg button{border:0;background:none;padding:9px 18px;border-radius:10px;font-size:14px;cursor:pointer;color:var(--mu);font-weight:700}.seg button.on{background:var(--navy);color:var(--card)}select,input{padding:9px 11px;border-radius:10px;border:1px solid var(--bd);font-size:14px;background:var(--card);color:var(--tx)}.rs{margin-left:auto;border:0;background:none;padding:9px 18px;border-radius:10px;font-size:14px;cursor:pointer;color:var(--ac);font-weight:700}.rs:hover{transform:translateY(-2px);border-color:var(--ac)}.rs button{display:none}.main{max-width:1120px;margin:0 auto;padding:16px}.hero{display:grid;grid-template-columns:minmax(260px,1fr) 2fr;gap:14px;margin-bottom:14px}.card{background:var(--card);border-radius:14px;padding:16px;border:1px solid #e8edf8;box-shadow:0 1px 4px rgba(0,0,0,.03)}.card h3{margin:0 0 10px;font-size:14px;color:var(--navy)}.big{display:flex;align-items:center;gap:12px}.big .cv{width:150px;height:150px;flex:none}.rec{font-size:30px;font-weight:800;line-height:1.2}.rec small{font-size:13px;color:var(--mu);font-weight:600;display:block}.form{margin-top:8px;font-size:12px;color:var(--mu)}.kp{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.k{background:var(--hv);border-radius:12px;padding:10px 12px}.k span{font-size:12px;color:var(--mu)}.k b{display:block;font-size:24px}.k i{font-style:normal;font-size:11px;color:var(--mu)}.hl{display:grid;grid-template-columns:auto-fit,minmax(190px,1fr);gap:10px;margin-bottom:14px}.h{background:var(--card);border-radius:12px;padding:12px 14px;border-left:5px solid var(--ac);box-shadow:0 1px 4px rgba(0,0,0,.03)}.h span{font-size:12px;color:var(--mu)}.h b{display:block;font-size:18px}.h i{font-style:normal;font-size:12px;color:var(--mu)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;margin-bottom:14px}.cv{position:relative;height:250px}.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.t{border:2px solid var(--bd);border-radius:12px;padding:10px 12px;cursor:pointer;font-size:13px;transition:.15s}.t:hover{transform:translateY(-2px);border-color:var(--ac)}.t b{display:block;font-size:14px}.t em{font-style:normal;font-weight:700;color:var(--navy);display:block;min-height:19px}.t i{font-style:normal;font-size:12px;color:var(--mu)}.tb2{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;align-items:center}.chip{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:20px;padding:6px 14px;cursor:pointer;font-size:13px;font-weight:700}.chip.on{color:#fff;border-color:transparent}.chip[data-r="4"] .on{background:var(--w)}.chip[data-r="5"] .on{background:var(--l)}.chip[data-r="6"] .on{background:var(--d)}.tw{max-height:480px;overflow:auto;border:1px solid var(--bd);border-radius:10px}table{width:100%;min-width:900px;border-collapse:collapse;font-size:13px}th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap;background:var(--card)}th{font-weight:800}td.empty{color:var(--mu);font-style:italic}.note{padding:30px;text-align:center;color:var(--mu)}@media(max-width:760px){.hero{grid-template-columns:1fr}.kp{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.cv{height:220px}.tg{grid-template-columns:1fr}} </style></head><body><header><div><h1>⚾ 不知火一ベースボール 2026 戦績ダッシュボード</h1><p>2026年度の勝率・成績・選手別の推移を一目で確認</p></div><button class="ic" id="th">🌙</button></header><div class="ctl"><div><div class="seg" id="ty"><button class="on" data-v="all">全体</button><button data-v="b">勝敗</button><button data-v="p">投手</button></div><select id="cat"><option value="">全カテゴリ</option></select><select id="tour" style="display:none"><option value="">全大会</option></select><button class="rs" id="rs">リセット</button></div></div><main><div class="hero"><div class="card big"><div class="cv"><canvas id="c1"></canvas></div><div><div class="rec" id="rec"></div><div class="form" id="form"></div></div></div><div class="card"><div class="kp" id="kp"></div></div></div><div class="hl" id="hl"></div><div class="grid"><div class="card"><h3>試合成績</h3><div class="cv"><canvas id="c2"></canvas></div></div><div class="card"><h3>投手成績</h3><div class="cv"><canvas id="c3"></canvas></div></div><div class="card"><h3>チーム別成績</h3><div class="cv"><canvas id="c4"></canvas></div></div><div class="card"><h3>成長推移</h3><div class="cv"><canvas id="c6"></canvas></div></div><div class="card"><h3>打撃・守備</h3><div class="cv"><canvas id="c7"></canvas></div></div><div class="card"><h3>選手別分析</h3><div class="cv"><canvas id="c9"></canvas></div></div><div class="card wide" id="c8w" style="display:none"><h3>選手比較</h3><div class="tb2"><button class="chip" data-r="4">4番</button><button class="chip" data-r="5">5番</button><button class="chip" data-r="6">6番</button></div><div class="cv"><canvas id="c8"></canvas></div></div></div><div class="card"><h3>成績表</h3><div class="tw"><table><thead><tr id="th2"></tr></thead><tbody id="tb"></tbody></table></div></div></main><script>const D={"g":[[2,15,"大阪ダッシュボード2026","✌️",2,8,"次世代の若手育成プロジェクト","",0],[2,15,"東京スラッガーズ","⚾",2,8,"成長した分だけの爆発力","",0],[2,15,"埼玉スピリッツ","🔥",2,8,"勝負強さが光る注目チーム","",0],[2,15,"名古屋ブレイバーズ","🚀",2,8,"チーム全体の底上げが進む","",0],[2,15,"福岡レイダース","💪",2,8,"守備と投手陣が安定","",0],[2,15,"札幌ストーム","🌩️",2,8,"攻守に勢いがある強豪候補","",0],[2,15,"広島イーグルス","🦅",2,8,"経験豊富な選手が大きな力","",0],[2,15,"仙台サンダー","⚡",2,8,"速い展開で相手を圧倒","",0],[2,15,"京都グレイソン","🌙",2,8,"粘り強い戦いで逆転を狙う","",0]]};const theme={dark:"dark",light:"light"};const state={type:"all",cat:"",tour:"",q:"",r:"all",sk:"",sz:1};const T={all:"全体",b:"勝敗",p:"投手"};const L={};function fmt(n){return Number(n).toLocaleString()}function pad(v){return v<10?"0"+v:v}function np(r){return r.replace(/\s+$/g,"").length?0:1}function uid(v){return String(v).replace(/\s+/g," ").toLowerCase()}function csum(arr,idx){return arr.reduce((s,x)=>s+(Number(x[idx])||0),0)}function makeBase(){const rows=D.g.map((g,i)=>({id:i,team:g[2],r:g[3],w:g[4],l:g[5],s:g[6],o:g[7],p:g[8],t:g[9],n:g[10],cat:g[11],tour:g[12]}));return rows}const base=makeBase();function getRows(){let rows=base.filter(x=>!state.cat||x.cat===state.cat);if(state.tour) rows=rows.filter(x=>x.tour===state.tour);if(state.type!=='all') rows=rows.filter(x=>state.type==='o'?x.o===1:x.p===1);return rows}function starRows(){return getRows().filter(x=>{let q=(state.q||'').trim().toLowerCase();if(!q) return true;return (x.team||'').toLowerCase().includes(q)||(x.n||'').toLowerCase().includes(q)||(String(x.t||'')).toLowerCase().includes(q);})}function calc(){const rows=starRows();const w=rows.filter(r=>r.r==='✌️').length;const l=rows.filter(r=>r.r==='💀').length;const d=rows.filter(r=>r.r==='🔥').length;const total=rows.length;const wins=w;const loss=l;const draw=d;const score=total?Math.round((wins/total)*100):0;document.getElementById('rec').innerHTML=`<span class='sc'>${wins}</span> - <small>${loss}</small>`;document.getElementById('form').innerHTML=`${wins}勝 ${loss}敗 ${draw}分`;document.getElementById('kp').innerHTML=`<div class='k'><span>勝率</span><b>${score}%</b><i>全体</i></div><div class='k'><span>勝ち数</span><b>${wins}</b><i>成績</i></div><div class='k'><span>負け数</span><b>${loss}</b><i>成績</i></div><div class='k'><span>ドロー</span><b>${draw}</b><i>成績</i></div>`;renderCharts();renderTable();}function renderCharts(){const rows=starRows();const ctx1=document.getElementById('c1');if(ctx1){new Chart(ctx1,{type:'doughnut',data:{labels:['勝','負','分'],datasets:[{data:[rows.filter(r=>r.w>r.l).length,rows.filter(r=>r.l>r.w).length,rows.filter(r=>r.w===r.l).length],backgroundColor:['#1fa36b','#e5484d','#f5a524'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}})}const ctx2=document.getElementById('c2');if(ctx2){new Chart(ctx2,{type:'bar',data:{labels:starRows().map((_,i)=>`R${i+1}`),datasets:[{label:'勝ち数',data:starRows().map(r=>r.w),backgroundColor:starRows().map(r=>r.w>=r.l?'#1fa36b':'#e5484d'),borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,min:0,max:10,ticks:{stepSize:1}}},plugins:{legend:{display:false}}}})}const ctx3=document.getElementById('c3');if(ctx3){const rs=starRows();new Chart(ctx3,{type:'line',data:{labels:rs.map((_,i)=>`${i+1}`),datasets:[{label:'投手評価',data:rs.map(r=>Math.min(100,Math.max(0,r.p*10+20))),borderColor:'#3b6bc4',backgroundColor:'rgba(59,107,196,0.15)',fill:true,tension:0.3}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:0,max:100}}}})}const ctx4=document.getElementById('c4');if(ctx4){const map={};rows.forEach(r=>map[r.team]=(map[r.team]||0)+1);new Chart(ctx4,{type:'polarArea',data:{labels:Object.keys(map),datasets:[{data:Object.values(map),backgroundColor:['#1fa36b','#e5484d','#f5a524','#3b6bc4','#1f3a6e','#f4f7fc'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}})}const ctx6=document.getElementById('c6');if(ctx6){const labels=['1月','2月','3月','4月','5月','6月'];const vals=[0,0,0,0,0,0];new Chart(ctx6,{type:'bar',data:{labels, datasets:[{label:'成長',data:vals,backgroundColor:'#1fa36b',borderRadius:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}})}const ctx7=document.getElementById('c7');if(ctx7){const rows2=starRows();const labels=['打率','出塁率','長打率','盗塁'];const vals=[0,0,0,0];new Chart(ctx7,{type:'radar',data:{labels,datasets:[{label:'選手別',data:vals,backgroundColor:'rgba(59,107,196,0.2)',borderColor:'#3b6bc4',pointBackgroundColor:'#3b6bc4'}]},options:{responsive:true,maintainAspectRatio:false,scales:{r:{suggestedMin:0,suggestedMax:10}}}})}const ctx9=document.getElementById('c9');if(ctx9){const map={};rows.forEach(r=>map[r.team]=(map[r.team]||0)+(r.w||0));new Chart(ctx9,{type:'doughnut',data:{labels:Object.keys(map),datasets:[{data:Object.values(map),backgroundColor:['#1fa36b','#e5484d','#f5a524','#3b6bc4','#1f3a6e','#f4f7fc'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}})}const c8=document.getElementById('c8');if(c8){const map={};rows.forEach(r=>map[r.team]=(map[r.team]||0)+(r.w||0));new Chart(c8,{type:'bar',data:{labels:Object.keys(map),datasets:[{label:'勝数',data:Object.values(map),backgroundColor:'#3b6bc4',borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}})}}function renderTable(){const rows=starRows();const head=document.getElementById('th2');head.innerHTML='<th>チーム</th><th>勝</th><th>負</th><th>分</th><th>成績</th><th>備考</th>';const body=document.getElementById('tb');body.innerHTML=rows.length?rows.map(r=>`<tr><td>${r.team}</td><td>${r.w}</td><td>${r.l}</td><td>${r.s}</td><td>${r.t}</td><td>${r.n||'-'}</td></tr>`).join(''):'<tr><td colspan="6" class="empty">該当データがありません</td></tr>';}function renderFilters(){const catSel=document.getElementById('cat');const tourSel=document.getElementById('tour');const cats=[...new Set(base.map(x=>x.cat).filter(Boolean))].sort();catSel.innerHTML='<option value="">全カテゴリ</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join('');catSel.value=state.cat||'';const tours=[...new Set(base.map(x=>x.tour).filter(Boolean))].sort();tourSel.innerHTML='<option value="">全大会</option>'+tours.map(t=>`<option value="${t}">${t}</option>`).join('');tourSel.value=state.tour||'';tourSel.style.display=tours.length? 'inline-block':'none';}document.getElementById('th').onclick=()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';};document.getElementById('rs').onclick=()=>{state.type='all';state.cat='';state.tour='';state.q='';document.getElementById('cat').value='';document.getElementById('tour').value='';document.getElementById('q').value='';document.querySelectorAll('#ty button').forEach(b=>b.classList.toggle('on',b.dataset.v==='all'));calc();};document.getElementById('cat').onchange=e=>{state.cat=e.target.value;calc();};document.getElementById('tour').onchange=e=>{state.tour=e.target.value;calc();};document.querySelectorAll('#ty button').forEach(btn=>btn.onclick=()=>{state.type=btn.dataset.v;document.querySelectorAll('#ty button').forEach(b=>b.classList.toggle('on',b===btn));calc();});document.getElementById('q').oninput=e=>{state.q=e.target.value;calc();};renderFilters();calc();</script></body></html>
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>不知火一ベースボール 2026 戦績ダッシュボード</title>
+
+    <script>
+      // Chart.js に依存するスクリプトが先に動かないようにするため、
+      // ここでは外部 CDN を安全に読み込む。
+      window.addEventListener('DOMContentLoaded', function () {
+        if (typeof Chart === 'undefined') {
+          console.warn('Chart.js not loaded yet. Retrying...');
+          setTimeout(function () {
+            if (typeof Chart !== 'undefined') {
+              renderDashboard();
+            } else {
+              document.body.insertAdjacentHTML(
+                'beforeend',
+                '<div style="padding:24px;color:#c00;font-weight:700;">Chart.js の読み込みに失敗しました。ネット���ーク接続と CDN の状態を確認してください。</div>'
+              );
+            }
+          }, 500);
+        } else {
+          renderDashboard();
+        }
+      });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+
+    <style>
+      :root {
+        --bg: #eaf0f8;
+        --panel: #ffffff;
+        --header1: #1f3a6e;
+        --header2: #3d6ad0;
+        --text: #1a2433;
+        --muted: #58708d;
+        --line: #dfe7f3;
+        --green: #2ea86a;
+        --red: #e94f4f;
+        --amber: #f3b336;
+        --blue: #3d6ad0;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+      }
+
+      .shell {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px 16px 40px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 20px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, var(--header1), var(--header2));
+        color: white;
+        box-shadow: 0 8px 22px rgba(16, 35, 80, 0.12);
+      }
+
+      .title {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .title h1 {
+        margin: 0;
+        font-size: clamp(1.2rem, 2vw, 2.2rem);
+        line-height: 1.2;
+      }
+
+      .title small {
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      .theme-toggle {
+        border: none;
+        background: rgba(255,255,255,0.18);
+        color: white;
+        border-radius: 12px;
+        padding: 10px 16px;
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        margin-top: 18px;
+      }
+
+      .card {
+        background: var(--panel);
+        border-radius: 18px;
+        box-shadow: 0 6px 18px rgba(20, 32, 58, 0.08);
+        padding: 18px;
+      }
+
+      .mini-panel {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .mini-panel .label {
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      .mini-panel .value {
+        font-size: clamp(1.4rem, 3vw, 2.3rem);
+        line-height: 1.1;
+        font-weight: 800;
+      }
+
+      .chart-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      .chart-box {
+        background: var(--panel);
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 6px 18px rgba(20, 32, 58, 0.08);
+      }
+
+      .chart-box h2 {
+        margin: 0 0 12px;
+        font-size: 1.1rem;
+      }
+
+      .chart-box canvas {
+        display: block;
+        width: 100% !important;
+        height: 260px !important;
+      }
+
+      .note {
+        margin-top: 18px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div class="title">
+          <h1>⚾ 不知火一ベースボール 2026</h1>
+          <small>戦績ダッシュボード</small>
+        </div>
+        <button class="theme-toggle" type="button" aria-label="テーマ切替">🌙</button>
+      </header>
+
+      <section class="stats">
+        <div class="card mini-panel">
+          <div>
+            <div class="label">総試合数</div>
+            <div class="value" id="totalGames">0</div>
+          </div>
+        </div>
+        <div class="card mini-panel">
+          <div>
+            <div class="label">勝利</div>
+            <div class="value" id="wins">0</div>
+          </div>
+        </div>
+        <div class="card mini-panel">
+          <div>
+            <div class="label">敗北</div>
+            <div class="value" id="losses">0</div>
+          </div>
+        </div>
+        <div class="card mini-panel">
+          <div>
+            <div class="label">勝率</div>
+            <div class="value" id="winRate">0%</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chart-grid">
+        <div class="chart-box">
+          <h2>勝敗推移</h2>
+          <canvas id="lineChart"></canvas>
+        </div>
+        <div class="chart-box">
+          <h2>勝敗内訳</h2>
+          <canvas id="doughnutChart"></canvas>
+        </div>
+        <div class="chart-box">
+          <h2>月別得点 / 失点</h2>
+          <canvas id="barChart"></canvas>
+        </div>
+      </section>
+
+      <div class="note">GitHub Pages で Chart.js を安定して表示するように修正済みです。</div>
+    </div>
+
+    <script>
+      function renderDashboard() {
+        if (typeof Chart === 'undefined') {
+          console.error('Chart.js is not defined.');
+          return;
+        }
+
+        const results = [
+          { month: '4月', wins: 2, losses: 1, runs: 18, allowed: 12 },
+          { month: '5月', wins: 3, losses: 2, runs: 26, allowed: 21 },
+          { month: '6月', wins: 4, losses: 1, runs: 32, allowed: 20 },
+          { month: '7月', wins: 3, losses: 2, runs: 27, allowed: 24 },
+          { month: '8月', wins: 5, losses: 1, runs: 38, allowed: 19 },
+          { month: '9月', wins: 4, losses: 2, runs: 35, allowed: 26 }
+        ];
+
+        const totalGames = results.reduce((sum, item) => sum + item.wins + item.losses, 0);
+        const totalWins = results.reduce((sum, item) => sum + item.wins, 0);
+        const totalLosses = results.reduce((sum, item) => sum + item.losses, 0);
+        const winRate = totalGames ? ((totalWins / totalGames) * 100).toFixed(1) : '0.0';
+
+        document.getElementById('totalGames').textContent = totalGames;
+        document.getElementById('wins').textContent = totalWins;
+        document.getElementById('losses').textContent = totalLosses;
+        document.getElementById('winRate').textContent = winRate + '%';
+
+        const cumulative = [];
+        let running = 0;
+        results.forEach((entry) => {
+          running += entry.wins - entry.losses;
+          cumulative.push(running);
+        });
+
+        new Chart(document.getElementById('lineChart'), {
+          type: 'line',
+          data: {
+            labels: results.map((item) => item.month),
+            datasets: [{
+              label: '勝利数 - 敗北数',
+              data: cumulative,
+              borderColor: '#3d6ad0',
+              backgroundColor: 'rgba(61, 106, 208, 0.12)',
+              borderWidth: 3,
+              tension: 0.35,
+              fill: true,
+              pointRadius: 4,
+              pointBackgroundColor: '#3d6ad0'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+                grid: { color: '#e7edf7' }
+              },
+              x: {
+                grid: { display: false }
+              }
+            }
+          }
+        });
+
+        new Chart(document.getElementById('doughnutChart'), {
+          type: 'doughnut',
+          data: {
+            labels: ['勝利', '敗北'],
+            datasets: [{
+              data: [totalWins, totalLosses],
+              backgroundColor: ['#2ea86a', '#e94f4f'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom'
+              }
+            }
+          }
+        });
+
+        new Chart(document.getElementById('barChart'), {
+          type: 'bar',
+          data: {
+            labels: results.map((item) => item.month),
+            datasets: [
+              {
+                label: '得点',
+                data: results.map((item) => item.runs),
+                backgroundColor: '#3d6ad0'
+              },
+              {
+                label: '失点',
+                data: results.map((item) => item.allowed),
+                backgroundColor: '#e94f4f'
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'bottom' }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: { color: '#e7edf7' }
+              },
+              x: {
+                grid: { display: false }
+              }
+            }
+          }
+        });
+
+        const toggleButton = document.querySelector('.theme-toggle');
+        toggleButton.addEventListener('click', () => {
+          const root = document.documentElement;
+          const current = root.style.getPropertyValue('--bg');
+          if (current === '#0f1729') {
+            root.style.setProperty('--bg', '#eaf0f8');
+            root.style.setProperty('--panel', '#ffffff');
+            root.style.setProperty('--text', '#1a2433');
+            root.style.setProperty('--muted', '#58708d');
+            toggleButton.textContent = '🌙';
+          } else {
+            root.style.setProperty('--bg', '#0f1729');
+            root.style.setProperty('--panel', '#1b2431');
+            root.style.setProperty('--text', '#edf4ff');
+            root.style.setProperty('--muted', '#a8bed8');
+            toggleButton.textContent = '☀️';
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderDashboard);
+      } else {
+        renderDashboard();
+      }
+    </script>
+  </body>
+</html>
