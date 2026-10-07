@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>不知火一ベースボール 2026 戦績ダッシュボード</title>
+    <style>
+      :root {
+        --bg: #eaf1f8;
+        --panel: #ffffff;
+        --panel-soft: #f5f7fb;
+        --header1: #1E3B6F;
+        --header2: #3B6DC7;
+        --text: #1d2a38;
+        --muted: #5b6e87;
+        --line: #dfe8f1;
+        --navy: #1a2d52;
+        --blue: #2d6fe9;
+        --green: #2eae75;
+        --red: #e9575d;
+        --amber: #f3b545;
+        --shadow: rgba(25, 38, 55, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+      }
+
+      .app {
+        width: min(100%, 1000px);
+        margin: 0 auto;
+        background: var(--bg);
+        padding: 0 0 28px;
+      }
+
+      .statusbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 52px;
+        padding: 0 18px 0 16px;
+        color: #2f2f2f;
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+
+      .statusbar .right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        background: linear-gradient(135deg, var(--header1), var(--header2));
+        color: #fff;
+        border-radius: 18px 18px 14px 14px;
+        padding: 20px 20px 18px;
+        margin: 0 14px;
+        box-shadow: 0 6px 18px rgba(20, 34, 62, 0.12);
+      }
+
+      .header-title {
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        line-height: 1.1;
+      }
+
+      .header-title .main {
+        font-size: clamp(1.8rem, 3vw, 3rem);
+        display: block;
+      }
+
+      .header-title .sub {
+        font-size: 1rem;
+        opacity: 0.94;
+        margin-top: 6px;
+        display: block;
+      }
+
+      .theme-pill {
+        border: 0;
+        background: rgba(255,255,255,.18);
+        color: #fff;
+        border-radius: 14px;
+        padding: 12px 18px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+      }
+
+      .controls {
+        margin: 16px 14px 0;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .seg {
+        display: flex;
+        align-items: center;
+        background: rgba(255,255,255,0.45);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 4px;
+        min-height: 48px;
+      }
+
+      .seg button {
+        border: 0;
+        background: transparent;
+        color: var(--navy);
+        font-size: 1.05rem;
+        font-weight: 700;
+        padding: 10px 22px;
+        border-radius: 12px;
+        cursor: pointer;
+      }
+
+      .seg button.active {
+        background: var(--navy);
+        color: #fff;
+      }
+
+      .filter {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .filter select {
+        appearance: none;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.7);
+        color: var(--navy);
+        border-radius: 12px;
+        height: 42px;
+        min-width: 180px;
+        padding: 0 40px 0 14px;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
+      .reset {
+        border: 0;
+        background: transparent;
+        color: var(--blue);
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .panel {
+        margin: 18px 14px 0;
+        background: rgba(255,255,255,0.5);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        min-height: 270px;
+        padding: 18px;
+        position: relative;
+      }
+
+      .chart-wrap {
+        width: 100%;
+        height: 240px;
+      }
+
+      .sub-panel {
+        margin: 18px 14px 0;
+        background: var(--panel-soft);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        min-height: 120px;
+        padding: 18px 20px 12px;
+      }
+
+      .section-title {
+        font-size: clamp(1.8rem, 2.9vw, 3rem);
+        color: var(--navy);
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        margin: 0 0 8px;
+      }
+
+      .footer {
+        margin-top: 18px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.9rem;
+        padding-bottom: 12px;
+      }
+
+      .footer a {
+        color: var(--navy);
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      @media (max-width: 720px) {
+        .statusbar {
+          padding-left: 10px;
+          padding-right: 10px;
+          font-size: 0.75rem;
+        }
+
+        .header {
+          margin: 0 8px;
+          padding: 16px 14px;
+        }
+
+        .header-title .main {
+          font-size: 1.5rem;
+        }
+
+        .controls {
+          margin-left: 8px;
+          margin-right: 8px;
+        }
+
+        .seg {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .seg button {
+          width: 100%;
+          padding-left: 6px;
+          padding-right: 6px;
+          font-size: 0.92rem;
+        }
+
+        .filter {
+          width: 100%;
+          justify-content: space-between;
+          margin-left: 0;
+        }
+
+        .filter select {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .panel, .sub-panel {
+          margin-left: 8px;
+          margin-right: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="statusbar">
+        <div>8:08</div>
+        <div class="right">
+          <span>◔</span>
+          <span>📶</span>
+          <span>83</span>
+        </div>
+      </div>
+
+      <header class="header">
+        <div class="header-title">
+          <span class="main">不知火一ベースボール 2026</span>
+          <span class="sub">戦績ダッシュボード</span>
+          <span class="sub" style="opacity:.82; font-size:.95rem;">令和8年版ベースボール研究所レベル2026年</span>
+        </div>
+        <button class="theme-pill" type="button" aria-label="ダークモード">🌙</button>
+      </header>
+
+      <div class="controls">
+        <div class="seg" aria-label="試合種類選択">
+          <button class="active" type="button">全試合</button>
+          <button type="button">主催試合</button>
+          <button type="button">参加試合</button>
+        </div>
+
+        <div class="filter">
+          <select aria-label="試合分類選択">
+            <option>試合分類を選択</option>
+            <option>リーグ戦</option>
+            <option>親善試合</option>
+            <option>トーナメント</option>
+          </select>
+          <button class="reset" type="button">⟳ リセット</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="chart-wrap">
+          <canvas id="topChart"></canvas>
+        </div>
+      </div>
+
+      <div class="sub-panel">
+        <h2 class="section-title">試合ごとの勝敗</h2>
+      </div>
+
+      <div class="footer">
+        <a href="https://rikipin716-sys.github.io/-fuchiichi-baseball-2026/">rikipin716-sys.github.io</a>
+      </div>
+    </div>
+
+    <script>
+      function loadChartJs(onLoaded) {
+        if (window.Chart) {
+          onLoaded();
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
+        script.onload = onLoaded;
+        script.onerror = function () {
+          console.error('Chart.js failed to load.');
+          const fallback = document.createElement('div');
+          fallback.style.padding = '24px';
+          fallback.style.color = '#c00';
+          fallback.style.fontWeight = '700';
+          fallback.textContent = 'Chart.js の読み込みに失敗しました。';
+          document.getElementById('topChart').replaceWith(fallback);
+        };
+        document.head.appendChild(script);
+      }
+
+      function renderDashboard() {
+        const ctx = document.getElementById('topChart');
+        if (!ctx) return;
+
+        const labels = ['4月', '5月', '6月', '7月', '8月', '9月'];
+        const wins = [2, 3, 4, 3, 5, 4];
+        const losses = [1, 2, 1, 2, 1, 2];
+
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels,
+            datasets: [
+              {
+                label: '勝ち',
+                data: wins,
+                backgroundColor: '#2eae75',
+                borderRadius: 8
+              },
+              {
+                label: '負け',
+                data: losses,
+                backgroundColor: '#e9575d',
+                borderRadius: 8
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: { color: '#56687e' }
+              },
+              y: {
+                beginAtZero: true,
+                grid: { color: '#e6edf3' },
+                ticks: { color: '#56687e' }
+              }
+            }
+          }
+        });
+      }
+
+      loadChartJs(renderDashboard);
+
+      document.querySelector('.theme-pill').addEventListener('click', function () {
+        const root = document.documentElement;
+        const dark = getComputedStyle(root).getPropertyValue('--bg').trim() === '#111827';
+        if (dark) {
+          root.style.setProperty('--bg', '#eaf1f8');
+          root.style.setProperty('--panel', '#ffffff');
+          root.style.setProperty('--panel-soft', '#f5f7fb');
+          root.style.setProperty('--text', '#1d2a38');
+          root.style.setProperty('--muted', '#5b6e87');
+          root.style.setProperty('--line', '#dfe8f1');
+          root.style.setProperty('--navy', '#1a2d52');
+          this.textContent = '🌙';
+        } else {
+          root.style.setProperty('--bg', '#111827');
+          root.style.setProperty('--panel', '#1f2937');
+          root.style.setProperty('--panel-soft', '#111827');
+          root.style.setProperty('--text', '#edf5ff');
+          root.style.setProperty('--muted', '#a4b3c8');
+          root.style.setProperty('--line', '#2d3a4d');
+          root.style.setProperty('--navy', '#dfeeff');
+          this.textContent = '☀️';
+        }
+      });
+    </script>
+  </body>
+</html>
