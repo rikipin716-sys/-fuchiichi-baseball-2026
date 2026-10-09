@@ -135,7 +135,7 @@ const cnt=a=>({w:a.filter(x=>x.r=='○').length,l:a.filter(x=>x.r=='●').length
 const COLS=[['日付','k'],['区分','off'],['カテゴリ','cat'],['対戦相手','opp'],['スコア','df'],['結果','r'],['試合名','n'],['先後','a'],['会場','gr'],['操作','']];
 $('th2').innerHTML=COLS.map(c=>`<th data-k="${c[1]}"${c[1]?'':' class="eo"'}>${c[0]}<span></span></th>`).join('');
 const SM='kisseki2026_mod',SK='kisseki2026_added',SR='kisseki2026_tr',esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const API_URL='';/* ←スプレッドシート連携する場合は、ここにGoogle Apps ScriptのウェブアプリURL（…/exec）を貼り付け。空欄ならブラウザ保存モード */
+const API_URL='https://script.google.com/macros/s/AKfycbwVC4EUnNAYQyvJj2ZsZxoleb_SL_ziGGu4SJELGrHtSPXagfMw0zYAwzWxfOtB23G5CA/exec';/* ←スプレッドシート連携する場合は、ここにGoogle Apps ScriptのウェブアプリURL（…/exec）を貼り付け。空欄ならブラウザ保存モード */
 const API=!!API_URL,CK='kisseki2026_cache';let SRV=[],SRVT={},TOKEN='',TEXP=0;
 try{const c=JSON.parse(localStorage.getItem(CK)||'null');if(c){SRV=c.games||[];SRVT=c.tour||{}}}catch(e){}
 let ADD=[],TRX={},OVR={},DEL=[];
