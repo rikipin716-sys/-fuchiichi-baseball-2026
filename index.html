@@ -1,60 +1,90 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!DOCTYPE html><html lang="ja" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>淵一少年野球部 2026 戦績ダッシュボード</title>
 <style>
-:root{--w:#1fa36b;--l:#e5484d;--d:#f5a524;--navy:#1f3a6e;--ac:#3b6bc4;--bg:#eef2f8;--card:#fff;--tx:#18212c;--mu:#667487;--bd:#e1e7f0;--hv:#f4f7fc;--sel:#e9f0fd}
-[data-theme=dark]{--navy:#8fb2f5;--ac:#6c9bf0;--bg:#0f1520;--card:#18212e;--tx:#e8edf4;--mu:#98a6b8;--bd:#2a3647;--hv:#1e2938;--sel:#1e3254}
-*{box-sizing:border-box}body{margin:0;font-family:"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;background:var(--bg);color:var(--tx);line-height:1.5}
-header{background:linear-gradient(135deg,#1f3a6e,#3b6bc4);color:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-header h1{margin:0;font-size:21px}header p{margin:2px 0 0;opacity:.8;font-size:12px}
-.ic{border:1px solid #fff5;background:#fff2;color:#fff;border-radius:10px;padding:8px 12px;cursor:pointer;font-size:14px}
-.ctl{position:sticky;top:0;z-index:20;background:var(--bg);padding:10px 16px;border-bottom:1px solid var(--bd)}
-.ctl>div{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.seg{display:flex;background:var(--bd);border-radius:12px;padding:3px}.seg button{border:0;background:none;padding:9px 18px;border-radius:10px;font-size:14px;cursor:pointer;color:var(--mu);font-weight:700}
-.seg button.on{background:var(--navy);color:var(--card)}
-select,input{padding:9px 11px;border-radius:10px;border:1px solid var(--bd);font-size:14px;background:var(--card);color:var(--tx)}
+:root{--w:#10c98f;--l:#ff5d73;--d:#ffb547;--navy:#3b5bdb;--ac:#5b8cff;--ac2:#8b5cf6;--bg:#eef1f8;--card:rgba(255,255,255,.74);--solid:#fff;--ctl:rgba(238,241,248,.78);--tx:#0f172a;--mu:#64748b;--bd:rgba(15,23,42,.09);--hv:rgba(91,140,255,.09);--sel:rgba(91,140,255,.16);--sh:0 10px 30px rgba(30,50,120,.10)}
+[data-theme=dark]{--navy:#8fb0ff;--ac:#6b9bff;--bg:#060a14;--card:rgba(22,30,50,.62);--solid:#111a2e;--ctl:rgba(6,10,20,.72);--tx:#e8eefb;--mu:#8e9db8;--bd:rgba(148,163,184,.15);--hv:rgba(107,155,255,.11);--sel:rgba(107,155,255,.2);--sh:0 12px 36px rgba(0,0,0,.45)}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(640px 420px at 8% -8%,rgba(91,140,255,.28),transparent 70%),radial-gradient(560px 420px at 100% 8%,rgba(139,92,246,.22),transparent 70%),radial-gradient(700px 520px at 55% 115%,rgba(34,211,238,.13),transparent 70%)}
+header{position:relative;overflow:hidden;background:linear-gradient(120deg,#0a1744 0%,#2547c8 48%,#7a4dff 100%);color:#fff;padding:30px 24px 34px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-radius:0 0 30px 30px;box-shadow:0 16px 40px rgba(37,71,200,.35)}
+header::before,header::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+header::before{width:340px;height:340px;right:-80px;top:-160px;background:radial-gradient(circle,rgba(255,255,255,.28),transparent 68%)}
+header::after{width:260px;height:260px;left:30%;bottom:-170px;background:radial-gradient(circle,rgba(34,211,238,.4),transparent 70%)}
+header>*{position:relative;z-index:1}
+header h1{margin:0;font-size:27px;font-weight:800;letter-spacing:.02em;line-height:1.25}
+header h1::before{content:"SEASON 2026";display:block;font-size:11px;font-weight:700;letter-spacing:.28em;opacity:.7;margin-bottom:6px}
+header p{margin:6px 0 0;opacity:.82;font-size:12px}
+.ic{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.14);backdrop-filter:blur(8px);color:#fff;border-radius:999px;padding:9px 16px;cursor:pointer;font-size:13px;font-weight:700;transition:.2s;white-space:nowrap}
+.ic:hover{background:rgba(255,255,255,.26);transform:translateY(-1px)}
+.ctl{position:sticky;top:0;z-index:20;background:var(--ctl);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);padding:12px 16px;border-bottom:1px solid var(--bd)}
+.ctl>div{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:flex;background:var(--hv);border:1px solid var(--bd);border-radius:999px;padding:4px}
+.seg button{border:0;background:none;padding:9px 20px;border-radius:999px;font-size:14px;cursor:pointer;color:var(--mu);font-weight:700;transition:.2s}
+.seg button:hover{color:var(--tx)}
+.seg button.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;box-shadow:0 6px 18px rgba(91,140,255,.45)}
+select,input,textarea{padding:10px 14px;border-radius:14px;border:1px solid var(--bd);font-size:14px;background:var(--solid);color:var(--tx);outline:none;transition:.2s}
+select:focus,input:focus,textarea:focus{border-color:var(--ac);box-shadow:0 0 0 3px var(--sel)}
 .rs{margin-left:auto;border:0;background:none;color:var(--ac);cursor:pointer;font-size:13px;font-weight:700}
-main{max-width:1120px;margin:0 auto;padding:16px}
-.hero{display:grid;grid-template-columns:minmax(260px,1fr) 2fr;gap:14px;margin-bottom:14px}
-.card{background:var(--card);border-radius:14px;padding:16px;box-shadow:0 1px 4px #0001}
-.card h3{margin:0 0 10px;font-size:14px;color:var(--navy)}
-.big{display:flex;align-items:center;gap:12px}.big .cv{width:150px;height:150px;flex:none}
-.rec{font-size:30px;font-weight:800;line-height:1.2}.rec small{font-size:13px;color:var(--mu);font-weight:600;display:block}
-.form{margin-top:8px;font-size:12px;color:var(--mu)}
-.kp{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.k{background:var(--hv);border-radius:12px;padding:10px 12px}.k span{font-size:12px;color:var(--mu)}.k b{display:block;font-size:24px}.k i{font-style:normal;font-size:11px;color:var(--mu)}
-.hl{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:14px}
-.h{background:var(--card);border-radius:12px;padding:12px 14px;border-left:5px solid var(--ac);box-shadow:0 1px 4px #0001}.h span{font-size:12px;color:var(--mu)}.h b{display:block;font-size:18px}.h i{font-style:normal;font-size:12px;color:var(--mu)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;margin-bottom:14px}.wide{grid-column:1/-1}
-.cv{position:relative;height:250px}
-.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
-.t{border:2px solid var(--bd);border-radius:12px;padding:10px 12px;cursor:pointer;font-size:13px;transition:.15s}.t.on{border-color:var(--ac);background:var(--sel)}.t:hover{transform:translateY(-2px);border-color:var(--ac)}
-.t b{display:block;font-size:14px}.t em{font-style:normal;font-weight:700;color:var(--navy);display:block;min-height:19px}.t i{font-style:normal;color:var(--mu);font-size:12px}
-.pb{display:flex;height:7px;border-radius:4px;overflow:hidden;margin:6px 0 4px;background:var(--bd)}.pb u{display:block}
-.tb2{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;align-items:center}
-.chip{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:20px;padding:6px 14px;cursor:pointer;font-size:13px;font-weight:700}.chip.on{color:#fff;border-color:transparent}
-.chip[data-r="○"].on{background:var(--w)}.chip[data-r="●"].on{background:var(--l)}.chip[data-r="△"].on{background:var(--d)}
-.tw{max-height:480px;overflow:auto;border:1px solid var(--bd);border-radius:10px}
-table{width:100%;min-width:900px;border-collapse:collapse;font-size:13px}
-th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap;background:var(--card)}
-th{position:sticky;top:0;z-index:3;color:var(--mu);cursor:pointer;user-select:none}th:hover{color:var(--ac)}
+main{max-width:1120px;margin:0 auto;padding:22px 16px 40px}
+.hero{display:grid;grid-template-columns:minmax(280px,1fr) 2fr;gap:16px;margin-bottom:16px}
+.card{background:var(--card);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid var(--bd);border-radius:22px;padding:20px;box-shadow:var(--sh);transition:transform .25s,box-shadow .25s;animation:up .5s both}
+.card:hover{transform:translateY(-2px)}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.card h3{margin:0 0 14px;font-size:14px;font-weight:800;letter-spacing:.04em;color:var(--tx);display:flex;align-items:center;gap:8px}
+.card h3::before{content:"";width:4px;height:15px;border-radius:3px;background:linear-gradient(180deg,var(--ac),var(--ac2))}
+.big{display:flex;align-items:center;gap:16px}.big .cv{width:170px;height:170px;flex:none}
+.rec{font-size:34px;font-weight:800;line-height:1.2;background:linear-gradient(90deg,var(--tx),var(--ac));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.rec small{font-size:13px;font-weight:600;display:block;color:var(--mu);-webkit-text-fill-color:var(--mu);margin-top:2px}
+.form{margin-top:12px;font-size:12px;color:var(--mu)}
+.kp{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;height:100%}
+.k{background:linear-gradient(160deg,var(--hv),transparent);border:1px solid var(--bd);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center}
+.k span{font-size:12px;color:var(--mu);font-weight:600}
+.k b{display:block;font-size:30px;font-weight:800;line-height:1.2;background:linear-gradient(135deg,var(--tx),var(--ac));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.k i{font-style:normal;font-size:11px;color:var(--mu)}
+.hl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.h{background:var(--card);backdrop-filter:blur(14px);border:0;border-left:5px solid var(--ac);border-radius:18px;padding:14px 16px;box-shadow:var(--sh);position:relative;overflow:hidden}
+.h::after{content:"";position:absolute;right:-30px;top:-30px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,var(--hv),transparent 70%)}
+.h span{font-size:12px;color:var(--mu);font-weight:600}.h b{display:block;font-size:21px;font-weight:800}.h i{font-style:normal;font-size:12px;color:var(--mu)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin-bottom:16px}.wide{grid-column:1/-1}
+.cv{position:relative;height:260px}
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.t{border:2px solid transparent;background:linear-gradient(var(--solid),var(--solid)) padding-box,linear-gradient(var(--bd),var(--bd)) border-box;border-radius:16px;padding:12px 14px;cursor:pointer;font-size:13px;transition:.2s}
+.t.on{background:linear-gradient(var(--solid),var(--solid)) padding-box,linear-gradient(135deg,var(--ac),var(--ac2)) border-box;box-shadow:0 8px 24px rgba(91,140,255,.3)}
+.t:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(91,140,255,.22)}
+.t b{display:block;font-size:14px}.t em{font-style:normal;font-weight:800;color:var(--navy);display:block;min-height:19px}.t i{font-style:normal;color:var(--mu);font-size:12px}
+.pb{display:flex;height:8px;border-radius:5px;overflow:hidden;margin:8px 0 6px;background:var(--bd)}.pb u{display:block}
+.tb2{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center}
+.chip{border:1px solid var(--bd);background:var(--solid);color:var(--tx);border-radius:999px;padding:7px 16px;cursor:pointer;font-size:13px;font-weight:700;transition:.2s}
+.chip:hover{border-color:var(--ac)}.chip.on{color:#fff;border-color:transparent}
+.chip[data-r="○"].on{background:var(--w);box-shadow:0 4px 14px rgba(16,201,143,.45)}.chip[data-r="●"].on{background:var(--l);box-shadow:0 4px 14px rgba(255,93,115,.45)}.chip[data-r="△"].on{background:var(--d);box-shadow:0 4px 14px rgba(255,181,71,.45)}
+.tw{max-height:480px;overflow:auto;border:1px solid var(--bd);border-radius:16px;background:var(--solid)}
+table{width:100%;min-width:900px;border-collapse:separate;border-spacing:0;font-size:13px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap;background:var(--solid)}
+th{position:sticky;top:0;z-index:3;color:var(--mu);font-size:12px;font-weight:700;letter-spacing:.04em;cursor:pointer;user-select:none}th:hover{color:var(--ac)}
 th:first-child,td:first-child{position:sticky;left:0;z-index:1}th:first-child{z-index:4}
-tbody tr:hover td{background:var(--hv)}td.o{max-width:230px;overflow:hidden;text-overflow:ellipsis}
-.sc{font-weight:800;font-variant-numeric:tabular-nums}
-.bd{display:inline-block;min-width:28px;text-align:center;border-radius:7px;color:#fff;font-weight:800;padding:1px 7px}.bd.○{background:var(--w)}.bd.●{background:var(--l)}.bd.△{background:var(--d)}
-.tag{font-size:11px;padding:2px 8px;border-radius:8px;background:var(--sel);color:var(--navy);font-weight:700}.tag.p{background:#f5a52422;color:var(--d)}
-.empty{padding:30px;text-align:center;color:var(--mu)}.note{font-size:12px;color:var(--mu)}
+tbody tr:nth-child(even) td{background:linear-gradient(var(--hv),var(--hv)),var(--solid)}
+tbody tr:hover td{background:linear-gradient(var(--sel),var(--sel)),var(--solid)}
+td.o{max-width:230px;overflow:hidden;text-overflow:ellipsis}
+.sc{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.03em}
+.bd{display:inline-block;min-width:30px;text-align:center;border-radius:999px;color:#fff;font-weight:800;padding:2px 9px}
+.bd.○{background:linear-gradient(135deg,#10c98f,#0ea5a0);box-shadow:0 3px 10px rgba(16,201,143,.4)}.bd.●{background:linear-gradient(135deg,#ff5d73,#ff3d6e);box-shadow:0 3px 10px rgba(255,93,115,.4)}.bd.△{background:linear-gradient(135deg,#ffb547,#ff9a3c);box-shadow:0 3px 10px rgba(255,181,71,.4)}
+.tag{font-size:11px;padding:3px 10px;border-radius:999px;background:var(--sel);color:var(--navy);font-weight:700}.tag.p{background:rgba(255,181,71,.18);color:var(--d)}
+.empty{padding:34px;text-align:center;color:var(--mu)}.note{font-size:12px;color:var(--mu)}
 .eo{display:none}body.edit .eo{display:table-cell}.eb{display:none}body.edit .eb{display:inline-block}
-.add{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:9px 16px;font-weight:700;cursor:pointer;font-size:14px}
-.mini{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:4px 10px;font-size:12px;cursor:pointer}.mini.del{color:var(--l)}
-.ov{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:50;padding:12px}.ov.on{display:flex}
-.md{background:var(--card);border-radius:16px;padding:18px;width:100%;max-width:560px;max-height:92vh;overflow:auto}.md h3{margin:0 0 12px;color:var(--navy)}
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fg label{display:flex;flex-direction:column;font-size:12px;color:var(--mu);gap:3px;font-weight:700}.fg .full{grid-column:1/-1}.fg input,.fg select{font-weight:400;width:100%}
-.pv{margin:12px 0;padding:10px;background:var(--hv);border-radius:10px;font-size:14px;text-align:center}.acts{display:flex;justify-content:flex-end;gap:8px}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;opacity:0;pointer-events:none;transition:.3s;z-index:60}.toast.on{opacity:1}
+.add{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border:0;border-radius:999px;padding:10px 20px;font-weight:800;cursor:pointer;font-size:14px;box-shadow:0 8px 20px rgba(91,140,255,.4);transition:.2s}
+.add:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(91,140,255,.5)}.add:disabled{opacity:.6}
+.mini{border:1px solid var(--bd);background:var(--solid);color:var(--tx);border-radius:999px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s}.mini:hover{border-color:var(--ac);color:var(--ac)}.mini.del{color:var(--l)}
+.ov{position:fixed;inset:0;background:rgba(4,8,20,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:50;padding:12px}.ov.on{display:flex}
+.md{background:var(--solid);border:1px solid var(--bd);border-radius:24px;padding:22px;width:100%;max-width:560px;max-height:92vh;overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:up .3s both}.md h3{margin:0 0 14px;color:var(--tx);font-size:17px}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fg label{display:flex;flex-direction:column;font-size:12px;color:var(--mu);gap:4px;font-weight:700}.fg .full{grid-column:1/-1}.fg input,.fg select{font-weight:400;width:100%}
+.pv{margin:14px 0;padding:12px;background:var(--hv);border:1px solid var(--bd);border-radius:14px;font-size:14px;text-align:center}.acts{display:flex;justify-content:flex-end;gap:8px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(10,16,32,.92);backdrop-filter:blur(10px);color:#fff;padding:12px 20px;border-radius:999px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:60;border:1px solid rgba(255,255,255,.12);box-shadow:0 12px 30px rgba(0,0,0,.4)}.toast.on{opacity:1}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:8px}
 @media(max-width:560px){.fg{grid-template-columns:1fr}}
-@media(max-width:760px){.hero{grid-template-columns:1fr}.kp{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}header h1{font-size:17px}.seg button{padding:9px 13px}}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.kp{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}header{padding:22px 16px 26px;border-radius:0 0 24px 24px}header h1{font-size:19px}.seg button{padding:9px 14px}.big .cv{width:140px;height:140px}.rec{font-size:28px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style></head><body>
-<header><div><h1>⚾ 淵一少年野球部　2026年 戦績ダッシュボード</h1><p>出典：年間結果2026 ／ 大会結果R8年度<span id="sync" style="cursor:pointer"></span></p></div><div style="display:flex;gap:8px"><button class="ic" id="lock">🔒 編集モード</button><button class="ic" id="th">🌙 ダーク</button></div></header>
+<header><div><h1>⚾ 淵一少年野球部　2026年 戦績ダッシュボード</h1><p>出典：年間結果2026 ／ 大会結果R8年度<span id="sync" style="cursor:pointer"></span></p></div><div style="display:flex;gap:8px"><button class="ic" id="lock">🔒 編集モード</button><button class="ic" id="th">☀️ ライト</button></div></header>
 <div class="ctl"><div><div class="seg" id="ty"><button data-v="all" class="on">すべて</button><button data-v="o">公式戦</button><button data-v="p">練習試合</button></div>
 <select id="cat"><option value="">全カテゴリ</option></select><select id="tour" style="display:none"><option value="">全大会</option></select><button class="add eb" id="add">＋ 試合を追加</button><button class="rs" id="rs">↺ リセット</button></div></div>
 <main>
@@ -98,7 +128,7 @@ tbody tr:hover td{background:var(--hv)}td.o{max-width:230px;overflow:hidden;text
 <datalist id="dl_opp"></datalist><datalist id="dl_gr"></datalist><div class="toast" id="toast"></div>
 <script>
 const D={"g":[[2,15,"レギュラー","●",2,8,"二本松スターズ","","練習試合","日連グラウンド","先行"],[2,15,"レギュラー","●",1,11,"二本松スターズ","","練習試合","日連グラウンド","後攻"],[2,21,"レギュラー","△",6,6,"町田ツインズ","","練習試合","藤の台球場","後攻"],[2,21,"5年生以下","○",12,4,"町田ツインズ","","練習試合","藤の台球場","先行"],[2,22,"レギュラー","○",4,3,"相模が丘ブラザーズ","","練習試合","相模が丘小学校","先行"],[2,22,"5年生以下","○",5,2,"相模が丘ブラザーズ","","練習試合","相模が丘小学校","後攻"],[2,23,"レギュラー","○",6,1,"ゴールデンイーグルス","","練習試合","串川グラウンド","先行"],[2,23,"5年生以下","○",12,5,"ゴールデンイーグルス","","練習試合","串川グラウンド","後攻"],[2,28,"レギュラー","○",7,0,"睦ファイターズ","","練習試合","串川グラウンド","先行"],[2,28,"5年生以下","○",10,6,"睦ファイターズ","","練習試合","串川グラウンド","後攻"],[2,28,"4年生以下","●",1,7,"睦ファイターズ","","練習試合","串川グラウンド","後攻"],[3,1,"レギュラー","○",1,0,"宮上ファイターズ","","練習試合","昭和橋スポーツ広場B","先行"],[3,1,"5年生以下","△",9,9,"宮上ファイターズ","","練習試合","昭和橋スポーツ広場B","後攻"],[3,7,"レギュラー","○",18,0,"水郷田名ミラクルズ","","練習試合","原宿グラウンドA","先行"],[3,7,"5年生以下","○",8,2,"水郷田名ミラクルズ","","練習試合","原宿グラウンドA","後攻"],[3,8,"レギュラー","○",4,1,"貝塚野球部","MIZUNOドリームカップ","MIZUNOカップ１回戦","昭和橋スポーツ広場C","先行"],[3,8,"レギュラー","●",0,14,"貝塚野球部","","練習試合","昭和橋スポーツ広場C","後攻"],[3,14,"レギュラー","△",9,9,"中和田クレインズ","","練習試合","中津工業団地第1号公園","先行"],[3,14,"5年生以下","○",5,4,"中和田クレインズ","","練習試合","中津工業団地第1号公園","後攻"],[3,20,"レギュラー","○",14,3,"千代田マリーンズ","","練習試合","ひばり球場","先行"],[3,20,"5年生以下","△",3,3,"千代田マリーンズ","","練習試合","ひばり球場","後攻"],[3,21,"レギュラー","○",14,1,"相模ドルフィンズ","","練習試合","中津工業団地第1号公園","後攻"],[3,21,"5年生以下","○",10,7,"相模ドルフィンズ","","練習試合","中津工業団地第1号公園","先行"],[3,22,"レギュラー","●",2,10,"あかつき野球部","","練習試合","昭和橋スポーツ広場D","先行"],[3,22,"5年生以下","○",6,5,"あかつき野球部","","練習試合","昭和橋スポーツ広場D","後攻"],[3,28,"レギュラー","○",10,0,"相模ボンバーズ","春季大会","春季大会 １回戦","昭和橋スポーツ広場D","後攻"],[3,29,"レギュラー","●",2,5,"翠ケ丘スターズ","","練習試合","相模台公園","先行"],[3,29,"5年生以下","●",3,10,"翠ケ丘スターズ","","練習試合","相模台公園","後攻"],[4,5,"レギュラー","○",11,1,"朝日か丘ルーキーズ","春季大会","春季大会 ２回戦","ひばり球場","後攻"],[4,5,"レギュラー","○",8,1,"宮崎モンスターズ","MIZUNOドリームカップ","MIZUNOカップ２回戦","中津工業団地第１号公園","後攻"],[4,11,"レギュラー","○",11,0,"麻溝ブルースターズ","春季大会","春季大会 ３回戦","昭和橋スポーツ広場A","先行"],[4,12,"レギュラー","●",2,9,"ひのきビートルズ","春季大会","春季大会 準々決勝","原宿グラウンドC","先行"],[4,18,"レギュラー","○",4,3,"古山スターズ","春季大会","春季大会 5位決定戦","ひばり球場","後攻"],[4,19,"レギュラー","○",18,12,"あかつき野球部","春季大会","春季大会 5位決定戦 ２回戦","原宿グラウンドA","先行"],[4,19,"レギュラー","●",1,8,"矢部少年野球クラブ","MIZUNOドリームカップ","MIZUNOカップ３回戦","中沢グラウンド","先行"],[4,26,"レギュラー","○",3,1,"睦ファイターズ","夏季大会","夏季大会大野北支部予選","由野台中学校","後攻"],[4,29,"6年生","○",5,2,"相南ジュニアーズ・鶴の台ウイングス合同","ALL JAPAN Aリーグ","ALL JAPAN BASEBALL LEAGUE Aリーグ","東林小学校","後攻"],[4,29,"4年生以下","●",7,9,"相南ジュニアーズ・鶴の台ウイングス合同","","練習試合","東林小学校","先行"],[5,2,"6年生","○",9,1,"矢三Aリトルハンターズ","ALL JAPAN Aリーグ","ALL JAPAN BASEBALL LEAGUE Aリーグ","昭和橋スポーツ広場B","後攻"],[5,2,"5年生以下","○",14,0,"矢三Aリトルハンターズ","","練習試合","昭和橋スポーツ広場B","後攻"],[5,6,"レギュラー","○",4,2,"千代田マリーンズ","中地区大会","中地区大会 １回戦","昭和橋スポーツ広場A","後攻"],[5,9,"レギュラー","●",2,5,"ゴールデンイーグルス","中地区大会","中地区大会 ２回戦","昭和橋スポーツ広場A","後攻"],[5,10,"レギュラー","●",2,7,"三田フレンズ","","練習試合","三田フレンズ球場","先行"],[5,10,"5年生以下","●",4,20,"三田フレンズ","","練習試合","三田フレンズ球場","後攻"],[5,16,"レギュラー","●",1,12,"あかつき野球部","夏季大会","夏季大会 １回戦","昭和橋スポーツ広場B","後攻"],[5,23,"5年生以下","○",19,3,"矢三Aリトルハンターズ","ジュニア大会","ジュニア大会 中部地区予選","昭和橋スポーツ広場C","先行"],[5,30,"5年生以下","○",24,0,"横山青葉・朝日が丘連合","ジュニア大会","ジュニア大会 中部地区予選","昭和橋スポーツ広場D","先行"],[5,31,"レギュラー","○",16,2,"座間フェニックス","","練習試合","東原小学校","先行"],[5,31,"5年生以下","○",12,1,"座間フェニックス","","練習試合","東原小学校","後攻"],[6,6,"レギュラー","○",21,2,"町田ツインズ","","練習試合","山王塚グラウンド","先行"],[6,7,"レギュラー","●",6,3,"座間パワーズ","コントリビュートカップ","県大会／コントリビュートカップ １回戦","相模三川公園","先行"],[6,14,"レギュラー","○",4,1,"中淵少年野球部","大野北春季リーグ戦","大野北春季リーグ戦","由野台中学校","先行"],[7,4,"5年生以下","●",4,5,"東林ファルコンズ","ジュニア大会","ジュニア大会 1回戦","ひばり球場","後攻"],[7,11,"レギュラー","○",8,2,"矢三Aリトルハンターズ","大野北春季リーグ戦","大野北春季リーグ戦","昭和橋スポーツ広場C","先行"],[7,12,"レギュラー","○",7,4,"旭町少年野球部","大野北春季リーグ戦","大野北春季リーグ戦","鵜野森公園多目的グラウンド","後攻"],[7,19,"レギュラー","○",5,1,"上矢部少年野球部","大野北春季リーグ戦","大野北春季リーグ戦","ひばり球場","後攻"],[7,20,"6年生","●",0,6,"睦ファイターズ","ALL JAPAN Aリーグ","ALL JAPAN BASEBALL LEAGUE Aリーグ","昭和橋スポーツ広場B","先行"],[7,25,"レギュラー","●",7,15,"麻溝台ペガサス","GBC スマイルリーグ","GBC大会スマイルリーグ","昭和橋スポーツ広場C","後攻"],[7,25,"4年生以下","○",7,5,"麻溝台ペガサス","","練習試合","昭和橋スポーツ広場C","後攻"],[8,1,"6年生","●",4,7,"谷口ファルコンズ","ALL JAPAN Aリーグ","ALL JAPAN BASEBALL LEAGUE Aリーグ","ひばり球場","後攻"],[8,2,"レギュラー","●",1,15,"二本松スターズ","GBC スーパーリーグ","GBC大会スーパーリーグ","中沢グラウンド","後攻"],[8,8,"レギュラー","○",8,2,"狩野エンゼルス","会長杯","県大会／2026 会長杯 1回戦","相模三川公園","後攻"],[8,9,"レギュラー","○",12,2,"上深谷ジャガーズ","会長杯","県大会／2026 会長杯 2回戦","相模三川公園","先行"],[8,10,"レギュラー","●",3,10,"スモールベアーズ","会長杯","県大会／2026 会長杯 3回戦","境川遊水池公園","後攻"],[8,23,"レギュラー","○",10,5,"ラークスジュニア","GBC スマイルリーグ","GBC大会スマイルリーグ","上溝中学校","先行"],[8,23,"レギュラー","●",1,8,"ゴールデンイーグルス","GBC スーパーリーグ","GBC大会スーパーリーグ","新宿小学校","先行"],[8,29,"レギュラー","●",6,7,"麻溝ブルースターズ","","練習試合","田代ソフトボール球場","先行"],[8,29,"5年生以下","○",12,8,"麻溝ブルースターズ","","練習試合","田代ソフトボール球場","後攻"],[8,30,"レギュラー","●",1,6,"当麻田野球部","GBC スマイルリーグ","GBC大会スマイルリーグ","当麻田小学校","先行"],[8,30,"4年生以下","○",6,5,"矢三Aリトルハンターズ","低学年大会","低学年大会（中地区予選","中沢グラウンド","後攻"],[9,12,"レギュラー","●",2,7,"古山スターズ","GBC スーパーリーグ","GBC大会スーパーリーグ","昭和橋スポーツ広場B","後攻"],[9,13,"レギュラー","●",2,14,"当麻田野球部","GBC スマイルリーグ","GBC大会スマイルリーグ","当麻田小学校","後攻"],[9,13,"4年生以下","●",1,13,"当麻田野球部","","練習試合","当麻田小学校","後攻"],[9,13,"レギュラー","●",2,4,"ひのきビートルズ","GBC スーパーリーグ","GBC大会スーパーリーグ","三栗山スポーツ広場A","後攻"],[9,19,"レギュラー","○",15,2,"双葉ニュースターズ","秋季大会","秋季大会 １回戦","昭和橋スポーツ広場C","先行"],[9,22,"4年生以下","●",3,4,"千代田マリーンズ","低学年大会","低学年大会（中地区予選","中津工業団地第２号公園","後攻"],[9,27,"5年生以下","△",7,7,"あかつき野球部","ALL JAPAN Bリーグ","ALL JAPAN BASEBALL LEAGUE Bリーグ","谷口台小学校","後攻"],[9,27,"レギュラー","●",3,5,"相武台ファイターズ","","練習試合","中津工業団地第２号公園","後攻"],[10,3,"レギュラー","●",5,6,"中和田クレインズ","秋季大会","秋季大会 ２回戦","昭和橋スポーツ広場B","後攻"],[10,4,"レギュラー","○",11,1,"旭町少年野球部","大野北秋季リーグ戦","大野北秋季リーグ戦","上溝小学校","後攻"],[10,4,"レギュラー","○",12,5,"睦ファイターズ","GBC スーパーリーグ","GBC大会スーパーリーグ（ポストシーズン戦","原宿グラウンドB","後攻"]],"t":[["春季大会","第5位"],["MIZUNOドリームカップ","3回戦敗退"],["中地区大会","2回戦敗退"],["夏季大会","1回戦敗退（支部予選は通過）"],["ジュニア大会","1回戦敗退（中部地区予選は通過）"],["低学年大会","中地区予選 2回戦敗退"],["秋季大会","2回戦敗退"],["コントリビュートカップ","1回戦敗退"],["会長杯","3回戦敗退（ベスト16）"],["大野北春季リーグ戦","優勝（全勝）"],["大野北秋季リーグ戦","開催中"],["GBC スマイルリーグ",""],["GBC スーパーリーグ","1勝4敗（ポストシーズン含む）"],["ALL JAPAN Aリーグ",""],["ALL JAPAN Bリーグ",""]]};let G=[],tl=[],TR={};
-const C={w:'#1fa36b',l:'#e5484d',d:'#f5a524'},$=i=>document.getElementById(i);
+const C={w:'#10c98f',l:'#ff5d73',d:'#ffb547'},$=i=>document.getElementById(i);
 const st={ty:'all',cat:'',t:'',res:new Set(),q:'',sk:'k',sd:1},ch={};
 const cnt=a=>({w:a.filter(x=>x.r=='○').length,l:a.filter(x=>x.r=='●').length,d:a.filter(x=>x.r=='△').length});
 const COLS=[['日付','k'],['区分','off'],['カテゴリ','cat'],['対戦相手','opp'],['スコア','df'],['結果','r'],['試合名','n'],['先後','a'],['会場','gr'],['操作','']];
@@ -134,10 +164,10 @@ $('th').onclick=()=>{const dk=document.documentElement.dataset.theme=='dark';doc
 let F=[];
 function mk(id,cfg){if(ch[id])ch[id].destroy();if(typeof Chart=='undefined')return;ch[id]=new Chart($(id),cfg)}
 const txc=()=>getComputedStyle(document.documentElement).getPropertyValue('--tx'),gc=()=>getComputedStyle(document.documentElement).getPropertyValue('--bd');
-function stackBar(id,labels,data,horiz){const o={responsive:true,maintainAspectRatio:false,indexAxis:horiz?'y':'x',plugins:{legend:{position:'bottom',labels:{boxWidth:12}}},scales:{x:{stacked:true,grid:{color:gc()},ticks:{precision:0}},y:{stacked:true,grid:{color:gc()},ticks:{precision:0}}}};
- mk(id,{type:'bar',data:{labels,datasets:[['勝','w'],['敗','l'],['分','d']].map(([l,c])=>({label:l,data:data(c),backgroundColor:C[c],borderRadius:3}))},options:o})}
+function stackBar(id,labels,data,horiz){const o={responsive:true,maintainAspectRatio:false,indexAxis:horiz?'y':'x',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'circle',boxWidth:8,padding:14}}},scales:{x:{stacked:true,grid:{color:gc()},ticks:{precision:0}},y:{stacked:true,grid:{color:gc()},ticks:{precision:0}}}};
+ mk(id,{type:'bar',data:{labels,datasets:[['勝','w'],['敗','l'],['分','d']].map(([l,c])=>({label:l,data:data(c),backgroundColor:C[c],borderRadius:6}))},options:o})}
 function render(){
- if(typeof Chart!='undefined'){Chart.defaults.color=txc();Chart.defaults.font.family='"Hiragino Sans","Yu Gothic",Meiryo,sans-serif'}
+ if(typeof Chart!='undefined'){Chart.defaults.color=getComputedStyle(document.documentElement).getPropertyValue('--mu');const tp=Chart.defaults.plugins.tooltip;Object.assign(tp,{backgroundColor:'rgba(8,12,24,.94)',titleColor:'#fff',bodyColor:'#cfd8ee',padding:12,cornerRadius:12,borderColor:'rgba(255,255,255,.12)',borderWidth:1,boxPadding:5});Chart.defaults.animation.duration=700;Chart.defaults.font.family='"Hiragino Sans","Yu Gothic",Meiryo,sans-serif'}
  const off=st.ty=='o';
  document.querySelectorAll('#ty button').forEach(b=>b.classList.toggle('on',b.dataset.v==st.ty));
  $('tour').style.display=off?'':'none';$('tour').value=st.t;$('cat').value=st.cat;$('tcw').style.display=off?'':'none';
@@ -151,22 +181,22 @@ function render(){
  let ms=0,cur=0;f.forEach(x=>{cur=x.r=='○'?cur+1:0;ms=Math.max(ms,cur)});
  const bw=[...f].filter(x=>x.r=='○').sort((a,b)=>(b.s-b.o)-(a.s-a.o))[0],bl=[...f].filter(x=>x.r=='●').sort((a,b)=>(b.o-b.s)-(a.o-a.s))[0],hs=[...f].sort((a,b)=>b.s-a.s)[0];
  const hc=(a,b,c,col)=>`<div class="h" style="border-color:${col}"><span>${a}</span><b>${b}</b><i>${c}</i></div>`,gm=x=>x?`${x.m}/${x.d} vs ${esc(x.opp)}`:'';
- $('hl').innerHTML=n?hc('最長連勝',ms+'連勝','',C.w)+(bw?hc('最大点差勝ち',`${bw.s}-${bw.o}`,gm(bw),C.w):'')+(bl?hc('最大点差負け',`${bl.s}-${bl.o}`,gm(bl),C.l):'')+hc('最多得点',hs.s+'点',gm(hs),'#3b6bc4'):'';
+ $('hl').innerHTML=n?hc('最長連勝',ms+'連勝','',C.w)+(bw?hc('最大点差勝ち',`${bw.s}-${bw.o}`,gm(bw),C.w):'')+(bl?hc('最大点差負け',`${bl.s}-${bl.o}`,gm(bl),C.l):'')+hc('最多得点',hs.s+'点',gm(hs),'#6b9bff'):'';
  if(off){$('tg').innerHTML=tl.map(t=>{const g=base.filter(x=>x.t==t),c=cnt(g),p=v=>(v/g.length*100)+'%';return g.length?`<div class="t ${st.t==t?'on':''}" data-t="${esc(t)}"><b>${esc(t)}</b><em>${esc(TR[t]||'—')}</em><div class="pb"><u style="width:${p(c.w)};background:${C.w}"></u><u style="width:${p(c.d)};background:${C.d}"></u><u style="width:${p(c.l)};background:${C.l}"></u></div><i>${c.w}勝${c.l}敗${c.d?c.d+'分':''}（${g.length}試合）</i></div>`:''}).join('');
   document.querySelectorAll('.t').forEach(e=>e.onclick=()=>{st.t=st.t==e.dataset.t?'':e.dataset.t;render()})}
- mk('c1',{type:'doughnut',data:{labels:['勝','敗','分'],datasets:[{data:[k.w,k.l,k.d],backgroundColor:[C.w,C.l,C.d],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false}}},plugins:[{id:'ct',afterDraw(c){const x=c.ctx,{left:l,right:r,top:t,bottom:b}=c.chartArea;x.save();x.textAlign='center';x.textBaseline='middle';x.fillStyle=txc();x.font='800 24px sans-serif';x.fillText(wr.toFixed(0)+'%',(l+r)/2,(t+b)/2-6);x.font='11px sans-serif';x.fillStyle='#889';x.fillText('勝率',(l+r)/2,(t+b)/2+14);x.restore()}}]});
+ mk('c1',{type:'doughnut',data:{labels:['勝','敗','分'],datasets:[{data:[k.w,k.l,k.d],backgroundColor:[C.w,C.l,C.d],borderWidth:0,borderRadius:8,spacing:3,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'74%',plugins:{legend:{display:false}}},plugins:[{id:'ct',afterDraw(c){const x=c.ctx,{left:l,right:r,top:t,bottom:b}=c.chartArea;x.save();x.textAlign='center';x.textBaseline='middle';x.fillStyle=txc();x.font='800 28px sans-serif';x.fillText(wr.toFixed(0)+'%',(l+r)/2,(t+b)/2-6);x.font='11px sans-serif';x.fillStyle='#889';x.fillText('勝率',(l+r)/2,(t+b)/2+14);x.restore()}}]});
  const mo=[...new Set(f.map(x=>x.m))].sort((a,b)=>a-b),by=m=>f.filter(x=>x.m==m),ml=mo.map(m=>m+'月');
  stackBar('c2',ml,c=>mo.map(m=>cnt(by(m))[c]));
- let cw=0;mk('c6',{type:'line',data:{labels:f.map(x=>x.m+'/'+x.d),datasets:[{label:'累計勝率(%)',data:f.map((x,i)=>{cw+=x.r=='○';return +(cw/(i+1)*100).toFixed(1)}),borderColor:'#3b6bc4',backgroundColor:'#3b6bc433',fill:true,tension:.25,pointRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,grid:{color:gc()}},x:{grid:{display:false},ticks:{maxTicksLimit:8}}}}});
+ let cw=0;mk('c6',{type:'line',data:{labels:f.map(x=>x.m+'/'+x.d),datasets:[{label:'累計勝率(%)',data:f.map((x,i)=>{cw+=x.r=='○';return +(cw/(i+1)*100).toFixed(1)}),borderColor:'#6b9bff',backgroundColor:c=>{const g=c.chart.ctx.createLinearGradient(0,0,0,c.chart.height||260);g.addColorStop(0,'rgba(107,155,255,.5)');g.addColorStop(1,'rgba(107,155,255,0)');return g},fill:true,tension:.4,pointRadius:0,pointHoverRadius:6,borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,grid:{color:gc()}},x:{grid:{display:false},ticks:{maxTicksLimit:8}}}}});
  const av=(m,p)=>+(by(m).reduce((a,x)=>a+x[p],0)/by(m).length).toFixed(1);
- mk('c3',{type:'line',data:{labels:ml,datasets:[{label:'平均得点',data:mo.map(m=>av(m,'s')),borderColor:'#3b6bc4',backgroundColor:'#3b6bc4',tension:.3},{label:'平均失点',data:mo.map(m=>av(m,'o')),borderColor:C.l,backgroundColor:C.l,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{boxWidth:12}}},scales:{y:{grid:{color:gc()}},x:{grid:{display:false}}}}});
+ mk('c3',{type:'line',data:{labels:ml,datasets:[{label:'平均得点',data:mo.map(m=>av(m,'s')),borderColor:'#6b9bff',backgroundColor:'#6b9bff',tension:.4,borderWidth:3,pointRadius:4,pointHoverRadius:6},{label:'平均失点',data:mo.map(m=>av(m,'o')),borderColor:C.l,backgroundColor:C.l,tension:.4,borderWidth:3,pointRadius:4,pointHoverRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{usePointStyle:true,pointStyle:'circle',boxWidth:8,padding:14}}},scales:{y:{grid:{color:gc()}},x:{grid:{display:false}}}}});
  const cs=[...new Set(f.map(x=>x.cat).filter(Boolean))];stackBar('c4',cs,c=>cs.map(q=>cnt(f.filter(x=>x.cat==q))[c]),1);
  const os=[...new Set(f.map(x=>x.opp))].filter(o=>f.filter(x=>x.opp==o).length>1).sort((a,b)=>f.filter(x=>x.opp==b).length-f.filter(x=>x.opp==a).length).slice(0,12);
  $('c7h').style.height=Math.max(250,os.length*28+60)+'px';stackBar('c7',os,c=>os.map(o=>cnt(f.filter(x=>x.opp==o))[c]),1);
  const at=['先行','後攻'];stackBar('c9',at,c=>at.map(a=>cnt(f.filter(x=>x.a==a))[c]));
  const six=off&&!st.t;$('c8w').style.display=six?'':'none';
  if(six){const ts=tl.filter(t=>base.some(x=>x.t==t));stackBar('c8',ts,c=>ts.map(t=>cnt(base.filter(x=>x.t==t))[c]))}
- mk('c5',{type:'bar',data:{labels:f.map(x=>x.m+'/'+x.d),datasets:[{label:'得失点差',data:f.map(x=>x.s-x.o),backgroundColor:f.map(x=>x.s>x.o?C.w:x.s<x.o?C.l:C.d),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>f[i[0].dataIndex].m+'/'+f[i[0].dataIndex].d+' vs '+f[i[0].dataIndex].opp,label:i=>f[i.dataIndex].s+' - '+f[i.dataIndex].o+'　'+(f[i.dataIndex].off?f[i.dataIndex].t:'練習試合')}}},scales:{y:{grid:{color:gc()}},x:{grid:{display:false},ticks:{maxTicksLimit:14}}}}});
+ mk('c5',{type:'bar',data:{labels:f.map(x=>x.m+'/'+x.d),datasets:[{label:'得失点差',data:f.map(x=>x.s-x.o),backgroundColor:f.map(x=>x.s>x.o?C.w:x.s<x.o?C.l:C.d),borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>f[i[0].dataIndex].m+'/'+f[i[0].dataIndex].d+' vs '+f[i[0].dataIndex].opp,label:i=>f[i.dataIndex].s+' - '+f[i.dataIndex].o+'　'+(f[i.dataIndex].off?f[i.dataIndex].t:'練習試合')}}},scales:{y:{grid:{color:gc()}},x:{grid:{display:false},ticks:{maxTicksLimit:14}}}}});
  table();updMod()}
 function table(){
  let r=F.filter(x=>(!st.res.size||st.res.has(x.r))&&(!st.q||(x.opp+x.gr+x.n+x.t).includes(st.q)));
