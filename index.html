@@ -43,6 +43,7 @@ tbody tr:hover td{background:var(--hv)}td.o{max-width:230px;overflow:hidden;text
 .bd{display:inline-block;min-width:28px;text-align:center;border-radius:7px;color:#fff;font-weight:800;padding:1px 7px}.bd.○{background:var(--w)}.bd.●{background:var(--l)}.bd.△{background:var(--d)}
 .tag{font-size:11px;padding:2px 8px;border-radius:8px;background:var(--sel);color:var(--navy);font-weight:700}.tag.p{background:#f5a52422;color:var(--d)}
 .empty{padding:30px;text-align:center;color:var(--mu)}.note{font-size:12px;color:var(--mu)}
+.eo{display:none}body.edit .eo{display:table-cell}.eb{display:none}body.edit .eb{display:inline-block}
 .add{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:9px 16px;font-weight:700;cursor:pointer;font-size:14px}
 .mini{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:4px 10px;font-size:12px;cursor:pointer}.mini.del{color:var(--l)}
 .ov{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:50;padding:12px}.ov.on{display:flex}
@@ -53,9 +54,9 @@ tbody tr:hover td{background:var(--hv)}td.o{max-width:230px;overflow:hidden;text
 @media(max-width:560px){.fg{grid-template-columns:1fr}}
 @media(max-width:760px){.hero{grid-template-columns:1fr}.kp{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}header h1{font-size:17px}.seg button{padding:9px 13px}}
 </style></head><body>
-<header><div><h1>⚾ 淵一少年野球部　2026年 戦績ダッシュボード</h1><p>出典：年間結果2026 ／ 大会結果R8年度</p></div><button class="ic" id="th">🌙 ダーク</button></header>
+<header><div><h1>⚾ 淵一少年野球部　2026年 戦績ダッシュボード</h1><p>出典：年間結果2026 ／ 大会結果R8年度<span id="sync" style="cursor:pointer"></span></p></div><div style="display:flex;gap:8px"><button class="ic" id="lock">🔒 編集モード</button><button class="ic" id="th">🌙 ダーク</button></div></header>
 <div class="ctl"><div><div class="seg" id="ty"><button data-v="all" class="on">すべて</button><button data-v="o">公式戦</button><button data-v="p">練習試合</button></div>
-<select id="cat"><option value="">全カテゴリ</option></select><select id="tour" style="display:none"><option value="">全大会</option></select><button class="add" id="add">＋ 試合を追加</button><button class="rs" id="rs">↺ リセット</button></div></div>
+<select id="cat"><option value="">全カテゴリ</option></select><select id="tour" style="display:none"><option value="">全大会</option></select><button class="add eb" id="add">＋ 試合を追加</button><button class="rs" id="rs">↺ リセット</button></div></div>
 <main>
 <div class="hero"><div class="card big"><div class="cv"><canvas id="c1"></canvas></div><div><div class="rec" id="rec"></div><div class="form" id="form"></div></div></div>
 <div class="card"><div class="kp" id="kp"></div></div></div>
@@ -74,8 +75,8 @@ tbody tr:hover td{background:var(--hv)}td.o{max-width:230px;overflow:hidden;text
 <div class="card"><h3>試合一覧 <span class="note" id="cn"></span></h3>
 <div class="tb2"><button class="chip" data-r="○">○ 勝</button><button class="chip" data-r="●">● 敗</button><button class="chip" data-r="△">△ 分</button><input id="q" type="search" placeholder="🔍 相手・会場・試合名で検索" style="flex:1;min-width:200px"></div>
 <div class="tw"><table><thead><tr id="th2"></tr></thead><tbody id="tb"></tbody></table></div>
-<div class="tb2" style="margin-top:10px"><button class="mini" id="ex">⬇ 追加・修正データを書き出し（.json）</button><button class="mini" id="ex2">📋 テキストで表示</button><button class="mini" id="im">⬆ 取り込み</button><button class="mini del" id="rm" style="display:none"></button><input type="file" id="imf" accept=".json,application/json" hidden></div>
-<p class="note">追加・修正した内容はこのブラウザに保存されます（別の端末へは「書き出し」→「取り込み」で移せます）。列見出しタップで並び替え。ティーボール大会（4/25・2勝1敗）は野球の戦績に含めていません。勝率＝勝÷全試合。</p></div>
+<div class="tb2" id="lo" style="margin-top:10px"><button class="mini" id="ex">⬇ 追加・修正データを書き出し（.json）</button><button class="mini" id="ex2">📋 テキストで表示</button><button class="mini" id="im">⬆ 取り込み</button><button class="mini del" id="rm" style="display:none"></button><input type="file" id="imf" accept=".json,application/json" hidden></div>
+<p class="note" id="nt">追加・修正した内容はこのブラウザに保存されます（別の端末へは「書き出し」→「取り込み」で移せます）。列見出しタップで並び替え。ティーボール大会（4/25・2勝1敗）は野球の戦績に含めていません。勝率＝勝÷全試合。</p></div>
 </main>
 <div class="ov" id="ov"><div class="md"><h3 id="mt">試合結果を追加</h3><div class="fg">
 <label>日付<input type="date" id="f_date"></label>
@@ -91,6 +92,7 @@ tbody tr:hover td{background:var(--hv)}td.o{max-width:230px;overflow:hidden;text
 <label>相手チーム得点<input type="number" id="f_o" min="0" inputmode="numeric"></label>
 <label id="l_tr" class="full">大会の結果（任意）<input id="f_tr" placeholder="例：2回戦敗退"></label></div>
 <div class="pv" id="pv"></div><div class="acts"><button class="mini" id="f_cancel">キャンセル</button><button class="add" id="f_save">保存</button></div></div></div>
+<div class="ov" id="ov3"><div class="md" style="max-width:380px"><h3>🔒 編集モード</h3><p class="note">編集用の合言葉を入力してください（有効時間：約8時間）。</p><input type="password" id="pw" autocomplete="current-password" style="width:100%;margin:8px 0"><div class="pv" id="pm" style="display:none"></div><div class="acts"><button class="mini" id="pw_c">キャンセル</button><button class="add" id="pw_ok">ログイン</button></div></div></div>
 <div class="ov" id="ov2"><div class="md"><h3 id="mt2"></h3><p class="note" id="mp2"></p><textarea id="ta" style="width:100%;height:190px;font-size:12px;padding:8px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font-family:monospace"></textarea>
 <div class="acts" style="margin-top:10px;flex-wrap:wrap"><button class="mini" id="b_close">閉じる</button><button class="mini" id="b_file">ファイルから</button><button class="add" id="b_copy">コピー</button><button class="mini" id="b_share">共有・保存</button><button class="add" id="b_do">読み込む</button></div></div></div>
 <datalist id="dl_opp"></datalist><datalist id="dl_gr"></datalist><div class="toast" id="toast"></div>
@@ -100,8 +102,11 @@ const C={w:'#1fa36b',l:'#e5484d',d:'#f5a524'},$=i=>document.getElementById(i);
 const st={ty:'all',cat:'',t:'',res:new Set(),q:'',sk:'k',sd:1},ch={};
 const cnt=a=>({w:a.filter(x=>x.r=='○').length,l:a.filter(x=>x.r=='●').length,d:a.filter(x=>x.r=='△').length});
 const COLS=[['日付','k'],['区分','off'],['カテゴリ','cat'],['対戦相手','opp'],['スコア','df'],['結果','r'],['試合名','n'],['先後','a'],['会場','gr'],['操作','']];
-$('th2').innerHTML=COLS.map(c=>`<th data-k="${c[1]}">${c[0]}<span></span></th>`).join('');
+$('th2').innerHTML=COLS.map(c=>`<th data-k="${c[1]}"${c[1]?'':' class="eo"'}>${c[0]}<span></span></th>`).join('');
 const SM='kisseki2026_mod',SK='kisseki2026_added',SR='kisseki2026_tr',esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const API_URL='https://script.google.com/macros/s/AKfycbwVC4EUnNAYQyvJj2ZsZxoleb_SL_ziGGu4SJELGrHtSPXagfMw0zYAwzWxfOtB23G5CA/exec';/* ←スプレッドシート連携する場合は、ここにGoogle Apps ScriptのウェブアプリURL（…/exec）を貼り付け。空欄ならブラウザ保存モード */
+const API=!!API_URL,CK='kisseki2026_cache';let SRV=[],SRVT={},TOKEN='',TEXP=0;
+try{const c=JSON.parse(localStorage.getItem(CK)||'null');if(c){SRV=c.games||[];SRVT=c.tour||{}}}catch(e){}
 let ADD=[],TRX={},OVR={},DEL=[];
 try{ADD=JSON.parse(localStorage.getItem(SK)||'[]');TRX=JSON.parse(localStorage.getItem(SR)||'{}');const M=JSON.parse(localStorage.getItem(SM)||'{}');OVR=M.ovr||{};DEL=M.del||[]}catch(e){console.warn(e)}
 function persist(){try{localStorage.setItem(SK,JSON.stringify(ADD));localStorage.setItem(SR,JSON.stringify(TRX));localStorage.setItem(SM,JSON.stringify({ovr:OVR,del:DEL}))}catch(e){console.warn(e);toast('ブラウザに保存できませんでした。「書き出し」でバックアップしてください')}}
@@ -109,12 +114,13 @@ function fill(sel,first,arr){sel.innerHTML='';sel.add(new Option(first,''));arr.
 const toG=(x,i,f)=>({i,id:x.id,m:x.m,d:x.d,cat:x.cat,r:x.s>x.o?'○':x.s<x.o?'●':'△',s:x.s,o:x.o,opp:x.opp,t:x.kind=='o'?x.t:'',n:x.kind=='o'?(x.n||x.t):'練習試合',gr:x.gr,a:x.a,off:x.kind=='o',k:x.y*10000+x.m*100+x.d,...f});
 const baseRec=i=>{const a=D.g[i];return{id:'b'+i,y:2026,m:a[0],d:a[1],cat:a[2],kind:a[7]?'o':'p',t:a[7],n:a[7]?a[8]:'',opp:a[6],gr:a[9],a:a[10],s:a[4],o:a[5]}};
 function build(){
+ if(API){G=SRV.map((x,j)=>toG(x,j,{srv:true})).sort((a,b)=>a.k-b.k||a.i-b.i);TR={...SRVT}}else{
  const b0=D.g.map((_,i)=>i).filter(i=>!DEL.includes(i)).map(i=>toG(OVR[i]||baseRec(i),i,{base:true,mod:!!OVR[i]}));
  const b1=ADD.map((x,j)=>toG(x,1000+j,{add:true}));
  G=[...b0,...b1].sort((a,b)=>a.k-b.k||a.i-b.i);
- TR={...Object.fromEntries(D.t),...TRX};
+ TR={...Object.fromEntries(D.t),...TRX}}
  const used=new Set(G.filter(x=>x.off).map(x=>x.t));
- tl=[...D.t.map(a=>a[0]),...used].filter((v,i,a)=>used.has(v)&&a.indexOf(v)==i);
+ tl=[...(API?Object.keys(TR):D.t.map(a=>a[0])),...used].filter((v,i,a)=>used.has(v)&&a.indexOf(v)==i);
  fill($('cat'),'全カテゴリ',[...new Set(G.map(x=>x.cat).filter(Boolean))]);fill($('tour'),'全大会',tl);
 }
 build();
@@ -167,14 +173,14 @@ function table(){
  const v=x=>st.sk=='df'?x.s-x.o:x[st.sk];r=[...r].sort((a,b)=>(v(a)>v(b)?1:v(a)<v(b)?-1:a.i-b.i)*st.sd);
  document.querySelectorAll('th').forEach(h=>h.lastChild.textContent=h.dataset.k==st.sk?(st.sd>0?' ▲':' ▼'):'');
  $('cn').textContent=`（${r.length}件）`;
- $('tb').innerHTML=r.length?r.map(x=>`<tr><td>${x.m}/${x.d}${x.mod?' <span class="tag p">修正</span>':''}${x.add?' <span class="tag">追加</span>':''}</td><td><span class="tag ${x.off?'':'p'}">${x.off?'公式戦':'練習'}</span></td><td>${esc(x.cat)}</td><td class="o" title="${esc(x.opp)}">${esc(x.opp)}</td><td class="sc">${x.s} - ${x.o}</td><td><span class="bd ${x.r}">${x.r}</span></td><td>${esc(x.off?x.t+'／'+x.n:'練習試合')}</td><td>${esc(x.a)}</td><td>${esc(x.gr)}</td><td><button class="mini" data-e="${esc(x.id)}">編集</button>${x.mod?` <button class="mini" data-r="${esc(x.id)}">元に戻す</button>`:''} <button class="mini del" data-x="${esc(x.id)}">削除</button></td></tr>`).join(''):'<tr><td colspan="10" class="empty">該当する試合がありません</td></tr>'}
+ $('tb').innerHTML=r.length?r.map(x=>`<tr><td>${x.m}/${x.d}${x.mod?' <span class="tag p">修正</span>':''}${x.add?' <span class="tag">追加</span>':''}</td><td><span class="tag ${x.off?'':'p'}">${x.off?'公式戦':'練習'}</span></td><td>${esc(x.cat)}</td><td class="o" title="${esc(x.opp)}">${esc(x.opp)}</td><td class="sc">${x.s} - ${x.o}</td><td><span class="bd ${x.r}">${x.r}</span></td><td>${esc(x.off?x.t+'／'+x.n:'練習試合')}</td><td>${esc(x.a)}</td><td>${esc(x.gr)}</td><td class="eo"><button class="mini" data-e="${esc(x.id)}">編集</button>${x.mod?` <button class="mini" data-r="${esc(x.id)}">元に戻す</button>`:''} <button class="mini del" data-x="${esc(x.id)}">削除</button></td></tr>`).join(''):'<tr><td colspan="10" class="empty">該当する試合がありません</td></tr>'}
 let editId=null,tt;
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2600)}
 const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 function toggleF(){const o=$('f_kind').value=='o';['l_t','l_n','l_tr'].forEach(i=>$(i).style.display=o?'':'none');$('l_nt').style.display=o&&$('f_t').value=='__new__'?'':'none'}
 function calcF(){const s=$('f_s').value,o=$('f_o').value;if(s===''||o===''){$('pv').textContent='スコアを入力すると結果が自動判定されます';return}const r=+s>+o?'○':+s<+o?'●':'△';$('pv').innerHTML=`結果：<span class="bd ${r}">${r}</span>　${esc(s)} - ${esc(o)}`}
 function openForm(id){
- const x=id?(id[0]=='b'?(OVR[+id.slice(1)]||baseRec(+id.slice(1))):ADD.find(a=>a.id==id)):null;editId=x?x.id:null;$('mt').textContent=x?'試合結果を編集':'試合結果を追加';
+ const x=id?(API?SRV.find(a=>a.id==id):id[0]=='b'?(OVR[+id.slice(1)]||baseRec(+id.slice(1))):ADD.find(a=>a.id==id)):null;editId=x?x.id:null;$('mt').textContent=x?'試合結果を編集':'試合結果を追加';
  const cs=[...new Set([...G.map(g=>g.cat).filter(Boolean),'レギュラー','6年生','5年生以下','4年生以下'])];
  $('f_cat').innerHTML=cs.map(c=>`<option>${esc(c)}</option>`).join('');
  $('f_t').innerHTML=tl.map(t=>`<option>${esc(t)}</option>`).join('')+'<option value="__new__">＋ 新しい大会名を入力…</option>';
@@ -182,7 +188,7 @@ function openForm(id){
  $('dl_gr').innerHTML=[...new Set(G.map(g=>g.gr).filter(Boolean))].map(v=>`<option value="${esc(v)}">`).join('');
  const p=x||{y:0,kind:'o',cat:'レギュラー',t:tl[0]||'__new__',n:'',opp:'',gr:'',a:'先行',s:'',o:''};
  $('f_date').value=x?`${x.y}-${String(x.m).padStart(2,'0')}-${String(x.d).padStart(2,'0')}`:iso(new Date());
- $('f_kind').value=p.kind;$('f_cat').value=p.cat;$('f_t').value=p.t||tl[0]||'__new__';$('f_nt').value='';$('f_n').value=p.n;$('f_opp').value=p.opp;$('f_gr').value=p.gr;$('f_a').value=p.a;$('f_s').value=p.s;$('f_o').value=p.o;$('f_tr').value=x&&x.t?(TRX[x.t]||''):'';
+ $('f_kind').value=p.kind;$('f_cat').value=p.cat;$('f_t').value=p.t||tl[0]||'__new__';$('f_nt').value='';$('f_n').value=p.n;$('f_opp').value=p.opp;$('f_gr').value=p.gr;$('f_a').value=p.a;$('f_s').value=p.s;$('f_o').value=p.o;$('f_tr').value=x&&x.t?((API?TR:TRX)[x.t]||''):'';
  toggleF();calcF();$('ov').classList.add('on')}
 const closeF=()=>$('ov').classList.remove('on');
 function saveF(){
@@ -190,17 +196,18 @@ function saveF(){
  let t=$('f_t').value;if(t=='__new__')t=$('f_nt').value.trim();
  if(!dt||!opp||s===''||o===''||(kind=='o'&&!t)){toast('日付・対戦相手・スコア'+(kind=='o'?'・大会':'')+'を入力してください');return}
  const rec={id:editId||('u'+Date.now()),y,m,d,kind,cat:$('f_cat').value,t:kind=='o'?t:'',n:kind=='o'?$('f_n').value.trim():'',opp,gr:$('f_gr').value.trim(),a:$('f_a').value,s:+s,o:+o};
- const tr=$('f_tr').value.trim();if(kind=='o'&&tr)TRX[t]=tr;
+ const tr=$('f_tr').value.trim();if(API){apiSave(rec,kind=='o'?tr:'');return}if(kind=='o'&&tr)TRX[t]=tr;
  if(editId&&editId[0]=='b')OVR[+editId.slice(1)]=rec;else if(editId)ADD=ADD.map(x=>x.id==editId?rec:x);else ADD.push(rec);
  persist();build();Object.assign(st,{ty:'all',cat:'',t:'',q:''});st.res.clear();$('q').value='';closeF();render();toast(editId?'更新しました':'追加しました')}
 ['f_kind','f_t'].forEach(i=>$(i).onchange=toggleF);['f_s','f_o'].forEach(i=>$(i).oninput=calcF);
 $('add').onclick=()=>openForm();$('f_cancel').onclick=closeF;$('f_save').onclick=saveF;
-$('ov').onclick=e=>{if(e.target==$('ov'))closeF()};document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeF();closeD()}});
+$('ov').onclick=e=>{if(e.target==$('ov'))closeF()};document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeF();closeD();$('ov3').classList.remove('on')}});
 $('tb').onclick=e=>{const b=e.target.closest('button');if(!b)return;
  if(b.dataset.e)openForm(b.dataset.e);
 
  if(b.dataset.r){delete OVR[+b.dataset.r.slice(1)];persist();build();render();toast('元に戻しました')}
- const id=b.dataset.x;if(id){const bs=id[0]=='b';if(confirm(bs?'この試合を一覧から削除しますか？（「過去データの修正を元に戻す」で復元できます）':'この試合を削除しますか？')){if(bs){DEL.push(+id.slice(1));delete OVR[+id.slice(1)]}else ADD=ADD.filter(x=>x.id!=id);persist();build();render();toast('削除しました')}}};
+ const id=b.dataset.x;if(id&&API){if(confirm('この試合を削除しますか？')){const o=SRV.find(a=>a.id==id);apiPost('delete',{id,u:o?o.u:''}).then(()=>toast('削除しました')).catch(()=>{})}return}
+ if(id){const bs=id[0]=='b';if(confirm(bs?'この試合を一覧から削除しますか？（「過去データの修正を元に戻す」で復元できます）':'この試合を削除しますか？')){if(bs){DEL.push(+id.slice(1));delete OVR[+id.slice(1)]}else ADD=ADD.filter(x=>x.id!=id);persist();build();render();toast('削除しました')}}};
 function updMod(){const n=Object.keys(OVR).length+DEL.length;$('rm').style.display=n?'':'none';$('rm').textContent=`↺ 過去データの修正を元に戻す（${n}件）`}
 $('rm').onclick=()=>{if(confirm('過去の試合の修正・削除をすべて元に戻しますか？（追加した試合は残ります）')){OVR={};DEL=[];persist();build();render();toast('元に戻しました')}};
 const TA=$('ta');let mode='';
@@ -225,6 +232,38 @@ $('ex').onclick=exportFile;$('ex2').onclick=()=>openData('ex');$('im').onclick=(
 $('b_close').onclick=closeD;$('b_copy').onclick=copyT;$('b_share').onclick=shareT;$('b_file').onclick=()=>$('imf').click();
 $('b_do').onclick=()=>doImport(TA.value.trim());$('ov2').onclick=e=>{if(e.target==$('ov2'))closeD()};
 $('imf').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{doImport(r.result);e.target.value=''};r.readAsText(f)};
+function setList(r){if(!r||!r.games)return;SRV=r.games;SRVT=Object.fromEntries(r.tour||[]);try{localStorage.setItem(CK,JSON.stringify({games:SRV,tour:SRVT}))}catch(e){}
+ $('sync').textContent=' ／ 🔄 '+new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})+' 更新'}
+async function rawPost(action,body){const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action,...body})});return r.json()}
+async function apiPost(action,body){
+ let r;try{r=await rawPost(action,{token:TOKEN,...body})}catch(e){console.error(e);toast('通信に失敗しました');throw e}
+ if(r.games){setList(r);build();render()}
+ if(r.ok)return r;
+ if(r.error=='auth'){logout(true);toast('編集の有効期限が切れました。もう一度ログインしてください')}
+ else if(r.error=='conflict')toast('他の人が先に更新しました。最新の内容を読み込みました。もう一度操作してください')
+ else if(r.error=='notfound')toast('対象の試合が見つかりません。最新の内容を読み込みました')
+ else toast(r.msg||'エラーが発生しました');
+ throw new Error(r.error)}
+async function apiSave(rec,tr){
+ const o=editId?SRV.find(a=>a.id==editId):null;
+ const g={id:editId||'',date:`${rec.y}-${String(rec.m).padStart(2,'0')}-${String(rec.d).padStart(2,'0')}`,kind:rec.kind,cat:rec.cat,t:rec.t,n:rec.n,opp:rec.opp,gr:rec.gr,a:rec.a,s:rec.s,o:rec.o,u:o?o.u:'',tr};
+ $('f_save').disabled=true;
+ try{await apiPost('upsert',{g});Object.assign(st,{ty:'all',cat:'',t:'',q:''});st.res.clear();$('q').value='';const w=editId;closeF();toast(w?'更新しました':'追加しました');render()}catch(e){}finally{$('f_save').disabled=false}}
+function setEdit(on){document.body.classList.toggle('edit',on||!API);$('lock').textContent=on?'🔓 編集中（終了）':'🔒 編集モード'}
+function logout(q){TOKEN='';TEXP=0;try{sessionStorage.removeItem('kt');sessionStorage.removeItem('ke')}catch(e){}setEdit(false);if(!q)toast('編集モードを終了しました')}
+const closeL=()=>$('ov3').classList.remove('on');
+async function login(){const pm=$('pm');pm.style.display='';pm.textContent='確認中…';
+ try{const r=await rawPost('login',{pass:$('pw').value});
+  if(r.ok){TOKEN=r.token;TEXP=r.exp;try{sessionStorage.setItem('kt',TOKEN);sessionStorage.setItem('ke',TEXP)}catch(e){}setEdit(true);closeL();toast('編集モードになりました');return}
+  pm.textContent=r.error=='locked'?'失敗が続いたため、一時的にロックされています。しばらくしてからお試しください。':r.error=='notconfigured'?'合言葉が未設定です（管理者の設定が必要です）。':'合言葉が違います。'}
+ catch(e){console.error(e);pm.textContent='通信に失敗しました。'}}
+if(!API){setEdit(true);$('lock').style.display='none'}
+else{$('lo').style.display='none';$('nt').textContent='データはGoogleスプレッドシートで共有されています。列見出しタップで並び替え。ティーボール大会（4/25・2勝1敗）は野球の戦績に含めていません。勝率＝勝÷全試合。';
+ try{TOKEN=sessionStorage.getItem('kt')||'';TEXP=+sessionStorage.getItem('ke')||0}catch(e){}
+ if(TOKEN&&TEXP<Date.now())TOKEN='';setEdit(!!TOKEN);
+ $('lock').onclick=()=>{if(TOKEN)logout();else{$('pw').value='';$('pm').style.display='none';$('ov3').classList.add('on');$('pw').focus()}};
+ $('pw_c').onclick=closeL;$('pw_ok').onclick=login;$('pw').onkeydown=e=>{if(e.key=='Enter')login()};
+ $('sync').onclick=()=>fetch(API_URL+'?action=list').then(r=>r.json()).then(r=>{setList(r);build();render();toast('最新データを取得しました')}).catch(()=>toast('取得できませんでした'))}
 const CHARTJS_URL='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
 function loadChartJs(){
  return new Promise((resolve,reject)=>{
@@ -237,6 +276,7 @@ function loadChartJs(){
  });
 }
 document.addEventListener('DOMContentLoaded',()=>{
- loadChartJs().then(render).catch(err=>{console.error(err);render()});
+ const p1=loadChartJs().catch(e=>console.error(e)),p2=API?fetch(API_URL+'?action=list').then(r=>r.json()).then(setList).catch(e=>{console.error(e);toast('最新データを取得できませんでした（前回のデータを表示）')}):Promise.resolve();
+ Promise.all([p1,p2]).then(()=>{build();render()});
 });
 </script></body></html>
