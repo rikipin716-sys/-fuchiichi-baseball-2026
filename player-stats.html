@@ -209,7 +209,7 @@ document.querySelectorAll('#md button').forEach(b=>b.onclick=()=>{st.mode=b.data
 $('sn').onchange=e=>{st.season=e.target.value;build();render()};$('gr').onchange=e=>{st.g=e.target.value;render()};$('mn').onchange=e=>{st.mins[st.mode]=+e.target.value;render()};$('q').oninput=e=>{st.q=e.target.value.trim();render()};
 $('th').onclick=()=>{const dk=document.documentElement.dataset.theme=='dark';document.documentElement.dataset.theme=dk?'':'dark';$('th').textContent=dk?'🌙 ダーク':'☀️ ライト';render()};
 // ---------- 更新・編集（Googleスプレッドシート連携） ----------
-const API_CONST='',CK='kisseki_players_cache2';
+const API_CONST='https://script.google.com/macros/s/AKfycbwD178-NcZOyF70mFpRPON0uS3yZUgGUe-i5JxgUtFsz7mA2hl_319b9Q7_CLOQhsX3NA/exec',CK='kisseki_players_cache2';
 const API_URL=(()=>{let u='';try{const q=new URLSearchParams(location.search).get('api');if(q){localStorage.setItem('kisseki_players_api',q);u=q}else u=localStorage.getItem('kisseki_players_api')||''}catch(e){}return API_CONST||u})(),API=!!API_URL;
 let TOKEN='',TEXP=0,editKey=null,tt,lastAt=0;
 try{const c=JSON.parse(localStorage.getItem(CK)||'null');if(API&&c&&c.b&&c.b.length)RECS=c}catch(e){}
