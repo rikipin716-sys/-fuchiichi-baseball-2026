@@ -87,7 +87,14 @@ td.o{max-width:230px;overflow:hidden;text-overflow:ellipsis}
 tbody tr{cursor:pointer}tbody tr.sel td{background:linear-gradient(var(--sel),var(--sel)),var(--solid)!important;font-weight:700}
 .q{opacity:.4}.pill{display:inline-block;padding:2px 9px;border-radius:999px;background:var(--sel);color:var(--navy);font-size:11px;font-weight:700;margin:0 4px 4px 0}
 .top{color:var(--ac);font-weight:800}.fg.n3{grid-template-columns:repeat(3,1fr)}@media(max-width:560px){.fg.n3{grid-template-columns:repeat(2,1fr)}}
-header .ic:disabled{opacity:.6}a.ic{text-decoration:none;display:inline-flex;align-items:center}</style></head><body>
+header .ic:disabled{opacity:.6}a.ic{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+/* ヘッダー：タイトルを1行目いっぱいに、ボタンは下の段に折り返して並べる */
+header{flex-direction:row;flex-wrap:wrap;align-items:flex-start;gap:14px 16px}
+header>div:first-child{flex:1 1 100%;min-width:0}
+.hb{display:flex;flex-wrap:wrap;gap:8px;width:100%;flex:1 1 100%;justify-content:flex-start}
+.hb .ic{flex:0 0 auto;padding:9px 16px;font-size:13px;white-space:nowrap;margin:0}
+@media(min-width:1000px){header>div:first-child{flex:1 1 0}.hb{flex:none;width:auto;justify-content:flex-end}}
+@media(max-width:760px){header{flex-direction:row;align-items:flex-start}.hb .ic{flex:1 1 calc(50% - 8px);padding:10px 8px}}</style></head><body>
 <header><div><h1>⚾ <span class="nw">淵一少年野球部</span> <span class="nw">選手成績ダッシュボード</span></h1><p>出典：Googleドライブ「選手成績データ」（打撃・投手・守備）<span id="sync"></span></p></div><div class="hb"><a class="ic" href="team-stats.html">📊 チーム戦績</a><button class="ic" id="rf">🔄 更新</button><button class="ic" id="lock">🔒 編集モード</button><button class="ic" id="th">☀️ ライト</button></div></header>
 <div class="ctl"><div><select id="sn" style="display:none"></select><div class="seg" id="md"><button data-v="b" class="on">打撃</button><button data-v="p">投手</button><button data-v="f">守備</button></div>
 <select id="gr"><option value="">全学年</option><option>6年</option><option>5年</option><option>4年</option><option>3年</option><option>2年</option><option>1年</option></select><select id="mn"></select>
@@ -209,7 +216,7 @@ document.querySelectorAll('#md button').forEach(b=>b.onclick=()=>{st.mode=b.data
 $('sn').onchange=e=>{st.season=e.target.value;build();render()};$('gr').onchange=e=>{st.g=e.target.value;render()};$('mn').onchange=e=>{st.mins[st.mode]=+e.target.value;render()};$('q').oninput=e=>{st.q=e.target.value.trim();render()};
 $('th').onclick=()=>{const dk=document.documentElement.dataset.theme=='dark';document.documentElement.dataset.theme=dk?'':'dark';$('th').textContent=dk?'🌙 ダーク':'☀️ ライト';render()};
 // ---------- 更新・編集（Googleスプレッドシート連携） ----------
-const API_CONST='https://script.google.com/macros/s/AKfycbwD178-NcZOyF70mFpRPON0uS3yZUgGUe-i5JxgUtFsz7mA2hl_319b9Q7_CLOQhsX3NA/exec',CK='kisseki_players_cache2';
+const API_CONST='',CK='kisseki_players_cache2';
 const API_URL=(()=>{let u='';try{const q=new URLSearchParams(location.search).get('api');if(q){localStorage.setItem('kisseki_players_api',q);u=q}else u=localStorage.getItem('kisseki_players_api')||''}catch(e){}return API_CONST||u})(),API=!!API_URL;
 let TOKEN='',TEXP=0,editKey=null,tt,lastAt=0;
 try{const c=JSON.parse(localStorage.getItem(CK)||'null');if(API&&c&&c.b&&c.b.length)RECS=c}catch(e){}
