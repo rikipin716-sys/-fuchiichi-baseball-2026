@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="ja" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>淵一少年野球部 選手成績ダッシュボード</title>
+<style>
+:root{--w:#10c98f;--l:#ff5d73;--d:#ffb547;--navy:#3b5bdb;--ac:#5b8cff;--ac2:#8b5cf6;--bg:#eef1f8;--card:rgba(255,255,255,.74);--solid:#fff;--ctl:rgba(238,241,248,.78);--tx:#0f172a;--mu:#64748b;--bd:rgba(15,23,42,.09);--hv:rgba(91,140,255,.09);--sel:rgba(91,140,255,.16);--sh:0 10px 30px rgba(30,50,120,.10)}
+[data-theme=dark]{--navy:#8fb0ff;--ac:#6b9bff;--bg:#060a14;--card:rgba(22,30,50,.62);--solid:#111a2e;--ctl:rgba(6,10,20,.72);--tx:#e8eefb;--mu:#8e9db8;--bd:rgba(148,163,184,.15);--hv:rgba(107,155,255,.11);--sel:rgba(107,155,255,.2);--sh:0 12px 36px rgba(0,0,0,.45)}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(640px 420px at 8% -8%,rgba(91,140,255,.28),transparent 70%),radial-gradient(560px 420px at 100% 8%,rgba(139,92,246,.22),transparent 70%),radial-gradient(700px 520px at 55% 115%,rgba(34,211,238,.13),transparent 70%)}
+header{position:relative;overflow:hidden;background:linear-gradient(120deg,#0a1744 0%,#2547c8 48%,#7a4dff 100%);color:#fff;padding:30px 24px 34px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-radius:0 0 30px 30px;box-shadow:0 16px 40px rgba(37,71,200,.35)}
+header::before,header::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+header::before{width:340px;height:340px;right:-80px;top:-160px;background:radial-gradient(circle,rgba(255,255,255,.28),transparent 68%)}
+header::after{width:260px;height:260px;left:30%;bottom:-170px;background:radial-gradient(circle,rgba(34,211,238,.4),transparent 70%)}
+header>*{position:relative;z-index:1}
+header h1{margin:0;font-size:27px;font-weight:800;letter-spacing:.02em;line-height:1.25}
+header h1::before{content:"SEASON 2026";display:block;font-size:11px;font-weight:700;letter-spacing:.28em;opacity:.7;margin-bottom:6px}
+header p{margin:6px 0 0;opacity:.82;font-size:12px}
+.ic{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.14);backdrop-filter:blur(8px);color:#fff;border-radius:999px;padding:9px 16px;cursor:pointer;font-size:13px;font-weight:700;transition:.2s;white-space:nowrap}
+.ic:hover{background:rgba(255,255,255,.26);transform:translateY(-1px)}
+.ctl{position:sticky;top:0;z-index:20;background:var(--ctl);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);padding:12px 16px;border-bottom:1px solid var(--bd)}
+.ctl>div{max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:flex;background:var(--hv);border:1px solid var(--bd);border-radius:999px;padding:4px}
+.seg button{border:0;background:none;padding:9px 20px;border-radius:999px;font-size:14px;cursor:pointer;color:var(--mu);font-weight:700;transition:.2s}
+.seg button:hover{color:var(--tx)}
+.seg button.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;box-shadow:0 6px 18px rgba(91,140,255,.45)}
+select,input,textarea{padding:10px 14px;border-radius:14px;border:1px solid var(--bd);font-size:14px;background:var(--solid);color:var(--tx);outline:none;transition:.2s}
+select:focus,input:focus,textarea:focus{border-color:var(--ac);box-shadow:0 0 0 3px var(--sel)}
+.rs{margin-left:auto;border:0;background:none;color:var(--ac);cursor:pointer;font-size:13px;font-weight:700}
+main{max-width:1120px;margin:0 auto;padding:22px 16px 40px}
+.hero{display:grid;grid-template-columns:minmax(280px,1fr) 2fr;gap:16px;margin-bottom:16px}
+.card{background:var(--card);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);border:1px solid var(--bd);border-radius:22px;padding:20px;box-shadow:var(--sh);transition:transform .25s,box-shadow .25s;animation:up .5s both}
+.card:hover{transform:translateY(-2px)}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.card h3{margin:0 0 14px;font-size:14px;font-weight:800;letter-spacing:.04em;color:var(--tx);display:flex;align-items:center;gap:8px}
+.card h3::before{content:"";width:4px;height:15px;border-radius:3px;background:linear-gradient(180deg,var(--ac),var(--ac2))}
+.big{display:flex;align-items:center;gap:16px}.big .cv{width:170px;height:170px;flex:none}
+.rec{font-size:34px;font-weight:800;line-height:1.2;background:linear-gradient(90deg,var(--tx),var(--ac));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.rec small{font-size:13px;font-weight:600;display:block;color:var(--mu);-webkit-text-fill-color:var(--mu);margin-top:2px}
+.form{margin-top:12px;font-size:12px;color:var(--mu)}
+.kp{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;height:100%}
+.k{background:linear-gradient(160deg,var(--hv),transparent);border:1px solid var(--bd);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center}
+.k span{font-size:12px;color:var(--mu);font-weight:600}
+.k b{display:block;font-size:30px;font-weight:800;line-height:1.2;background:linear-gradient(135deg,var(--tx),var(--ac));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.k i{font-style:normal;font-size:11px;color:var(--mu)}
+.hl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.h{background:var(--card);backdrop-filter:blur(14px);border:0;border-left:5px solid var(--ac);border-radius:18px;padding:14px 16px;box-shadow:var(--sh);position:relative;overflow:hidden}
+.h::after{content:"";position:absolute;right:-30px;top:-30px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,var(--hv),transparent 70%)}
+.h span{font-size:12px;color:var(--mu);font-weight:600}.h b{display:block;font-size:21px;font-weight:800}.h i{font-style:normal;font-size:12px;color:var(--mu)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin-bottom:16px}.wide{grid-column:1/-1}
+.cv{position:relative;height:260px}
+.tg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.t{border:2px solid transparent;background:linear-gradient(var(--solid),var(--solid)) padding-box,linear-gradient(var(--bd),var(--bd)) border-box;border-radius:16px;padding:12px 14px;cursor:pointer;font-size:13px;transition:.2s}
+.t.on{background:linear-gradient(var(--solid),var(--solid)) padding-box,linear-gradient(135deg,var(--ac),var(--ac2)) border-box;box-shadow:0 8px 24px rgba(91,140,255,.3)}
+.t:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(91,140,255,.22)}
+.t b{display:block;font-size:14px}.t em{font-style:normal;font-weight:800;color:var(--navy);display:block;min-height:19px}.t i{font-style:normal;color:var(--mu);font-size:12px}
+.pb{display:flex;height:8px;border-radius:5px;overflow:hidden;margin:8px 0 6px;background:var(--bd)}.pb u{display:block}
+.tb2{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center}
+.chip{border:1px solid var(--bd);background:var(--solid);color:var(--tx);border-radius:999px;padding:7px 16px;cursor:pointer;font-size:13px;font-weight:700;transition:.2s}
+.chip:hover{border-color:var(--ac)}.chip.on{color:#fff;border-color:transparent}
+.chip[data-r="○"].on{background:var(--w);box-shadow:0 4px 14px rgba(16,201,143,.45)}.chip[data-r="●"].on{background:var(--l);box-shadow:0 4px 14px rgba(255,93,115,.45)}.chip[data-r="△"].on{background:var(--d);box-shadow:0 4px 14px rgba(255,181,71,.45)}
+.tw{max-height:480px;overflow:auto;border:1px solid var(--bd);border-radius:16px;background:var(--solid)}
+table{width:100%;min-width:900px;border-collapse:separate;border-spacing:0;font-size:13px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap;background:var(--solid)}
+th{position:sticky;top:0;z-index:3;color:var(--mu);font-size:12px;font-weight:700;letter-spacing:.04em;cursor:pointer;user-select:none}th:hover{color:var(--ac)}
+th:first-child,td:first-child{position:sticky;left:0;z-index:1}th:first-child{z-index:4}
+tbody tr:nth-child(even) td{background:linear-gradient(var(--hv),var(--hv)),var(--solid)}
+tbody tr:hover td{background:linear-gradient(var(--sel),var(--sel)),var(--solid)}
+td.o{max-width:230px;overflow:hidden;text-overflow:ellipsis}
+.sc{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.03em}
+.bd{display:inline-block;min-width:30px;text-align:center;border-radius:999px;color:#fff;font-weight:800;padding:2px 9px}
+.bd.○{background:linear-gradient(135deg,#10c98f,#0ea5a0);box-shadow:0 3px 10px rgba(16,201,143,.4)}.bd.●{background:linear-gradient(135deg,#ff5d73,#ff3d6e);box-shadow:0 3px 10px rgba(255,93,115,.4)}.bd.△{background:linear-gradient(135deg,#ffb547,#ff9a3c);box-shadow:0 3px 10px rgba(255,181,71,.4)}
+.tag{font-size:11px;padding:3px 10px;border-radius:999px;background:var(--sel);color:var(--navy);font-weight:700}.tag.p{background:rgba(255,181,71,.18);color:var(--d)}
+.empty{padding:34px;text-align:center;color:var(--mu)}.note{font-size:12px;color:var(--mu)}
+.eo{display:none}body.edit .eo{display:table-cell}.eb{display:none}body.edit .eb{display:inline-block}
+.add{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border:0;border-radius:999px;padding:10px 20px;font-weight:800;cursor:pointer;font-size:14px;box-shadow:0 8px 20px rgba(91,140,255,.4);transition:.2s}
+.add:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(91,140,255,.5)}.add:disabled{opacity:.6}
+.mini{border:1px solid var(--bd);background:var(--solid);color:var(--tx);border-radius:999px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s}.mini:hover{border-color:var(--ac);color:var(--ac)}.mini.del{color:var(--l)}
+.ov{position:fixed;inset:0;background:rgba(4,8,20,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:50;padding:12px}.ov.on{display:flex}
+.md{background:var(--solid);border:1px solid var(--bd);border-radius:24px;padding:22px;width:100%;max-width:560px;max-height:92vh;overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.45);animation:up .3s both}.md h3{margin:0 0 14px;color:var(--tx);font-size:17px}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fg label{display:flex;flex-direction:column;font-size:12px;color:var(--mu);gap:4px;font-weight:700}.fg .full{grid-column:1/-1}.fg input,.fg select{font-weight:400;width:100%}
+.pv{margin:14px 0;padding:12px;background:var(--hv);border:1px solid var(--bd);border-radius:14px;font-size:14px;text-align:center}.acts{display:flex;justify-content:flex-end;gap:8px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(10,16,32,.92);backdrop-filter:blur(10px);color:#fff;padding:12px 20px;border-radius:999px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.3s;z-index:60;border:1px solid rgba(255,255,255,.12);box-shadow:0 12px 30px rgba(0,0,0,.4)}.toast.on{opacity:1}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:8px}
+@media(max-width:560px){.fg{grid-template-columns:1fr}}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.kp{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}header{padding:22px 16px 26px;border-radius:0 0 24px 24px}header h1{font-size:19px}.seg button{padding:9px 14px}.big .cv{width:140px;height:140px}.rec{font-size:28px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+tbody tr{cursor:pointer}tbody tr.sel td{background:linear-gradient(var(--sel),var(--sel)),var(--solid)!important;font-weight:700}
+.q{opacity:.4}.pill{display:inline-block;padding:2px 9px;border-radius:999px;background:var(--sel);color:var(--navy);font-size:11px;font-weight:700;margin:0 4px 4px 0}
+.top{color:var(--ac);font-weight:800}.fg.n3{grid-template-columns:repeat(3,1fr)}@media(max-width:560px){.fg.n3{grid-template-columns:repeat(2,1fr)}}
+header .ic:disabled{opacity:.6}a.ic{text-decoration:none;display:inline-flex;align-items:center}</style></head><body>
+<header><div><h1>⚾ <span class="nw">淵一少年野球部</span> <span class="nw">選手成績ダッシュボード</span></h1><p>出典：Googleドライブ「選手成績データ」（打撃・投手・守備）<span id="sync"></span></p></div><div class="hb"><a class="ic" href="%E6%88%A6%E7%B8%BE%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%892026.html">📊 チーム戦績</a><button class="ic" id="rf">🔄 更新</button><button class="ic" id="lock">🔒 編集モード</button><button class="ic" id="th">☀️ ライト</button></div></header>
+<div class="ctl"><div><select id="sn" style="display:none"></select><div class="seg" id="md"><button data-v="b" class="on">打撃</button><button data-v="p">投手</button><button data-v="f">守備</button></div>
+<select id="gr"><option value="">全学年</option><option>6年</option><option>5年</option><option>4年</option><option>3年</option><option>2年</option><option>1年</option></select><select id="mn"></select>
+<input id="q" type="search" placeholder="🔍 選手名・背番号" style="flex:1;min-width:140px"><button class="add eb" id="add">＋ 追加</button></div></div>
+<main>
+<div class="hero"><div class="card"><h3 id="ht"></h3><div class="rec" id="rec"></div><div class="form" id="sub"></div></div><div class="card"><div class="kp" id="kp"></div></div></div>
+<div class="hl" id="hl"></div>
+<div class="grid">
+<div class="card" id="cd1"><h3 id="t1"></h3><div class="cv"><canvas id="c1"></canvas></div></div>
+<div class="card" id="cd2"><h3 id="t2"></h3><div class="cv"><canvas id="c2"></canvas></div></div>
+<div class="card" id="cd3"><h3 id="t3"></h3><div class="cv"><canvas id="c3"></canvas></div></div>
+<div class="card" id="cd4"><h3 id="t4"></h3><div id="pc" style="margin:-6px 0 6px"></div><div class="cv"><canvas id="c4"></canvas></div></div>
+<div class="card" id="cd5"><h3 id="t5"></h3><div class="cv"><canvas id="c5"></canvas></div></div>
+<div class="card" id="cd6"><h3 id="t6"></h3><div class="cv"><canvas id="c6"></canvas></div></div>
+</div>
+<div class="card"><h3>選手一覧 <span class="note" id="cn"></span></h3><div class="tw"><table><thead><tr id="hr"></tr></thead><tbody id="tb"></tbody></table></div>
+<p class="note" id="nt"></p></div>
+</main>
+<div class="ov" id="ov"><div class="md"><h3 id="mt"></h3><div class="fg"><label>シーズン<input id="f_season" list="dl_s"></label><label>学年<select id="f_grade"><option>6年</option><option>5年</option><option>4年</option><option>3年</option><option>2年</option><option>1年</option></select></label><label>選手名<input id="f_name"></label><label>背番号<input type="number" id="f_no" min="0" inputmode="numeric"></label></div>
+<div class="fg n3" id="fg2" style="margin-top:12px"></div><div class="pv" id="pv"></div><div class="acts"><button class="mini" id="f_cancel">キャンセル</button><button class="add" id="f_save">保存</button></div></div></div>
+<div class="ov" id="ov3"><div class="md" style="max-width:380px"><h3>🔒 編集モード</h3><p class="note">編集用の合言葉を入力してください（有効時間：約8時間）。</p><input type="password" id="pw" autocomplete="current-password" style="width:100%;margin:8px 0"><div class="pv" id="pm" style="display:none"></div><div class="acts"><button class="mini" id="pw_c">キャンセル</button><button class="add" id="pw_ok">ログイン</button></div></div></div>
+<datalist id="dl_s"></datalist><div class="toast" id="toast"></div>
+<script>
+const DATA={"b":[["宮元　陽詩",2,"6年",117,38,46,28,15,2,0,3,23,3,0.391,37,3,0,1],["粟ヶ窪　悠",9,"6年",34,6,15,8,1,1,0,9,13,0,0.286,14,2,0,0],["佐原　悠輝",8,"6年",45,6,8,10,1,0,0,18,11,1,0.214,9,0,3,0],["二見　純由",7,"6年",67,11,8,9,3,1,0,23,13,1,0.152,4,0,0,2],["梅本　真乃介",6,"5年",94,26,44,24,4,1,0,17,30,0,0.435,43,2,1,1],["宮崎　悠斗",5,"6年",115,24,27,21,5,1,0,16,24,3,0.275,26,2,3,2],["江田　悠吾",4,"5年",106,49,28,27,13,1,0,6,20,1,0.449,25,2,2,1],["栗田　駿",3,"6年",123,32,47,30,10,2,0,13,28,4,0.333,35,1,3,1],["清水　朝陽",26,"5年",58,18,24,17,3,1,0,5,13,3,0.371,24,2,0,0],["市川　雄大",25,"5年",123,39,47,23,7,4,3,15,30,4,0.347,23,5,0,1],["武石　和大",19,"4年",39,13,16,8,4,0,0,9,11,3,0.423,13,1,0,0],["石川　歩武",18,"5年",25,1,6,2,1,0,0,14,9,0,0.118,10,0,0,0],["與山　葵香",17,"5年",14,3,2,1,0,0,0,7,5,0,0.125,1,1,0,0],["島袋　勇喜",16,"5年",124,27,39,30,18,2,1,12,20,2,0.361,39,1,1,0],["藤田　晴智",15,"6年",11,1,8,3,0,0,0,4,8,0,0.25,5,0,0,0],["丸山　修弥",14,"5年",45,12,28,6,7,0,0,9,24,0,0.286,29,1,0,0],["越田　陸斗",13,"5年",42,10,14,14,4,0,0,6,10,0,0.391,10,1,0,1],["齋藤　陽仁",12,"6年",36,8,13,6,1,0,0,15,10,0,0.333,9,1,1,0],["原田　優莉奈",11,"6年",37,4,6,3,2,0,0,13,13,0,0.13,7,1,3,0],["遠藤　嵩也",10,"6年",118,23,50,31,14,3,0,14,40,2,0.298,51,2,0,1],["伊藤　慶人",1,"5年",143,34,52,25,17,2,2,17,24,0,0.392,28,5,4,1],["佐々木　慶",23,"4年",6,0,1,1,0,0,0,1,0,0,0,1,0,0,0],["大木　遥人",32,"4年",1,1,0,0,0,0,0,1,1,2,0,2,0,0,0],["松本　錬",22,"3年",8,2,3,1,0,0,0,3,3,1,0.2,5,0,0,0],["原田　秀悟",24,"2年",9,3,1,1,0,0,0,7,4,1,0.2,3,0,0,0],["粟ヶ窪　陸",21,"3年",9,0,4,0,0,0,0,6,3,1,0,4,0,0,0],["桑原　翼",20,"4年",8,0,3,0,0,0,0,5,5,1,0,4,0,0,0]],"p":[["宮元　陽詩",2,"6年",8,47,171,18,11,10,7,10,0,0,0,0,5,0,0.45],["粟ヶ窪　悠",9,"6年",3.2,21,95,3,4,4,12,1,0,0,0,0,3,0,0.333],["佐原　悠輝",8,"6年",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],["二見　純由",7,"6年",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],["梅本　真乃介",6,"5年",1,10,38,1,6,0,3,2,0,1,0,0,4,0,0.167],["宮崎　悠斗",5,"6年",15.2,88,351,17,28,13,23,14,1,2,3,0,6,0,0.266],["江田　悠吾",4,"5年",31.2,155,515,34,34,14,10,37,1,2,2,1,10,0,0.239],["栗田　駿",3,"6年",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],["清水　朝陽",26,"5年",1.2,8,30,1,0,0,2,1,0,0,0,1,0,0,0.167],["市川　雄大",25,"5年",1,9,36,2,5,3,3,0,1,0,0,0,0,0,0.4],["武石　和大",19,"4年",10.1,39,180,2,1,0,4,26,1,1,0,0,2,0,0.059],["石川　歩武",18,"5年",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],["與山　葵香",17,"5年",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],["島袋　勇喜",16,"5年",62,296,1111,58,60,43,34,59,3,5,1,4,15,3,0.228],["藤田　晴智",15,"6年",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],["丸山　修弥",14,"5年",12,88,355,13,32,21,29,16,1,2,0,0,17,0,0.232],["越田　陸斗",13,"5年",4.1,32,130,10,15,10,6,7,0,1,1,0,6,0,0.385],["齋藤　陽仁",12,"6年",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],["原田　優莉奈",11,"6年",3.2,22,81,5,11,8,8,3,0,0,1,0,7,0,0.357],["遠藤　嵩也",10,"6年",101.2,468,1861,92,86,66,70,113,5,17,8,0,15,2,0.236],["伊藤　慶人",1,"5年",108.1,486,1620,122,78,58,22,92,4,12,8,1,17,4,0.269],["佐々木　慶",23,"4年",3.1,31,121,5,11,7,10,8,5,0,1,0,2,0,0.313],["大木　遥人",32,"4年",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],["松本　錬",22,"3年",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],["原田　秀悟",24,"2年",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],["粟ヶ窪　陸",21,"3年",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],["桑原　翼",20,"4年",2,13,48,5,8,4,1,4,0,0,0,0,2,0,0.417]],"f":[["宮元　陽詩",2,"6年",1,0,5,8,0.048],["粟ヶ窪　悠",9,"6年",0.72,7,0,0,0],["佐原　悠輝",8,"6年",0.538,6,0,0,0],["二見　純由",7,"6年",0.818,2,0,0,0],["梅本　真乃介",6,"5年",0.891,7,0,0,0],["宮崎　悠斗",5,"6年",0.862,15,0,0,0],["江田　悠吾",4,"5年",0.903,9,0,0,0],["栗田　駿",3,"6年",0.977,5,1,1,0.063],["清水　朝陽",26,"5年",0.926,6,3,4,0.062],["市川　雄大",25,"5年",0.952,3,0,0,0],["武石　和大",19,"4年",0.737,15,0,0,0],["石川　歩武",18,"5年",0.556,4,0,0,0],["與山　葵香",17,"5年",0.5,1,0,0,0],["島袋　勇喜",16,"5年",0.813,9,0,0,0],["藤田　晴智",15,"6年",0.85,3,0,0,0],["丸山　修弥",14,"5年",0.889,8,0,0,0],["越田　陸斗",13,"5年",0.933,8,11,2,0.024],["齋藤　陽仁",12,"6年",0.667,4,0,0,0],["原田　優莉奈",11,"6年",0.765,8,0,0,0],["遠藤　嵩也",10,"6年",0.88,10,0,0,0],["伊藤　慶人",1,"5年",0.91,10,0,0,0],["佐々木　慶",23,"4年",0.824,3,0,0,0],["大木　遥人",32,"4年",0,0,0,0,0],["松本　錬",22,"3年",0.2,4,0,0,0],["原田　秀悟",24,"2年",0.5,2,0,0,0],["粟ヶ窪　陸",21,"3年",0,1,0,0,0],["桑原　翼",20,"4年",0.857,1,0,0,0]]},$=i=>document.getElementById(i),C={w:'#10c98f',l:'#ff5d73',d:'#ffb547',a:'#6b9bff',v:'#8b5cf6'};
+const SEA0='26年度公式戦＆練習試合',LB={b:'打撃成績',p:'投手成績',f:'守備成績'};
+const KEYS={b:['name','no','grade','ab','rbi','r','s1','d2','d3','hr','so','bb','hbp','risp','sb','cs','sh','sf'],p:['name','no','grade','ip','bf','np','h','r','er','bb','so','hbp','w','l','sv','wp','hr','ba'],f:['name','no','grade','fpct','err','pb','cs','csp']};
+const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const f3=v=>isFinite(v)?v.toFixed(3).replace(/^0/,''):'-.---',f2=v=>isFinite(v)?v.toFixed(2):'-',ipf=o=>Math.floor(o/3)+(o%3?'.'+o%3:''),short=n=>String(n).replace('　',' ');
+const toRecs=m=>DATA[m].map(a=>({season:SEA0,...Object.fromEntries(KEYS[m].map((k,i)=>[k,a[i]])),u:''}));
+let RECS={b:toRecs('b'),p:toRecs('p'),f:toRecs('f')},P=[];
+const outsOf=ip=>{const w=Math.floor(ip+1e-9);return w*3+Math.round((ip-w)*10)};
+const DER={
+ b:x=>{const h=x.s1+x.d2+x.d3+x.hr,tb=x.s1+2*x.d2+3*x.d3+4*x.hr,pa=x.ab+x.bb+x.hbp+x.sh+x.sf;return{...x,h,tb,pa,bbh:x.bb+x.hbp,avg:x.ab?h/x.ab:0,obp:(h+x.bb+x.hbp)/Math.max(1,x.ab+x.bb+x.hbp+x.sf),slg:x.ab?tb/x.ab:0,get ops(){return this.obp+this.slg}}},
+ p:x=>{const o=outsOf(x.ip),d=o/3;return{...x,outs:o,ipd:d,era:d?x.er*9/d:0,whip:d?(x.h+x.bb)/d:0,k9:d?x.so*9/d:0,bb9:d?x.bb*9/d:0,act:o>0||x.bf>0}},
+ f:x=>({...x,act:true})};
+const FLD={b:[['ab','打数'],['s1','単打'],['d2','二塁打'],['d3','三塁打'],['hr','本塁打'],['rbi','打点'],['r','得点'],['so','三振'],['bb','四球'],['hbp','死球'],['sh','犠打'],['sf','犠飛'],['sb','盗塁'],['cs','盗塁刺'],['risp','得点圏打率','rate']],
+ p:[['ip','投球回（例 3.2）','ip'],['bf','対打者'],['np','投球数'],['h','被安打'],['r','失点'],['er','自責点'],['bb','与四球'],['so','奪三振'],['hbp','与死球'],['w','勝利'],['l','敗北'],['sv','セーブ'],['wp','暴投'],['hr','被本塁打'],['ba','被打率','rate']],
+ f:[['fpct','守備率','rate'],['err','失策'],['pb','捕逸'],['cs','盗塁阻止'],['csp','盗塁阻止率','rate']]};
+const COLS={b:[['選手','name'],['背番号','no'],['学年','grade'],['打席','pa'],['打数','ab'],['安打','h'],['単打','s1'],['二塁打','d2'],['三塁打','d3'],['本塁打','hr'],['打点','rbi'],['得点','r'],['四球','bb'],['死球','hbp'],['三振','so'],['犠打','sh'],['犠飛','sf'],['盗塁','sb'],['盗塁刺','cs'],['打率','avg'],['出塁率','obp'],['長打率','slg'],['OPS','ops'],['得点圏','risp'],['操作','']],
+ p:[['選手','name'],['背番号','no'],['学年','grade'],['投球回','outs'],['対打者','bf'],['投球数','np'],['被安打','h'],['失点','r'],['自責点','er'],['与四球','bb'],['奪三振','so'],['与死球','hbp'],['暴投','wp'],['被本塁打','hr'],['勝','w'],['敗','l'],['S','sv'],['防御率','era'],['WHIP','whip'],['被打率','ba'],['奪三振率','k9'],['与四球率','bb9'],['操作','']],
+ f:[['選手','name'],['背番号','no'],['学年','grade'],['守備率','fpct'],['失策','err'],['捕逸','pb'],['盗塁阻止','cs'],['盗塁阻止率','csp'],['操作','']]};
+const FMT={avg:f3,obp:f3,slg:f3,ops:f3,risp:f3,ba:f3,fpct:f3,csp:f3,era:f2,whip:f2,k9:f2,bb9:f2,outs:ipf};
+const RATEK={b:['avg','obp','slg','ops','risp'],p:['era','whip','ba','k9','bb9'],f:[]};
+const ASC={b:['name','grade','no','so'],p:['name','grade','no','era','whip','ba','bb9'],f:['name','grade','no','err','pb']};
+const MINS={b:{k:'ab',opts:[[0,'規定打数：なし'],[20,'規定打数：20以上'],[40,'規定打数：40以上'],[80,'規定打数：80以上']]},p:{k:'ipd',opts:[[0,'規定投球回：なし'],[10,'規定投球回：10回以上'],[20,'規定投球回：20回以上'],[40,'規定投球回：40回以上']]},f:null};
+const NOTE={b:'出塁率＝(安打＋四死球)÷(打数＋四死球＋犠飛)、長打率＝塁打÷打数。規定打数に届かない選手の率は薄く表示し、順位・タイトルから除外します。',p:'防御率＝自責点×9÷投球回、WHIP＝(被安打＋与四球)÷投球回、被打率はシートの入力値です。登板のない選手は表示しません。規定投球回に届かない選手の率は薄く表示します。',f:'守備率・盗塁阻止率はシートの入力値をそのまま表示しています。'};
+const st={mode:'b',g:'',q:'',mins:{b:20,p:10,f:0},sel:2,season:'',sk:{b:'avg',p:'era',f:'fpct'},sd:{b:-1,p:1,f:-1}},ch={};
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v);
+const sum=(a,k)=>a.reduce((s,p)=>s+p[k],0),best=(a,k,d)=>[...a].sort((x,y)=>(y[k]-x[k])*(d||1))[0];
+const mk=(id,cfg)=>{if(ch[id])ch[id].destroy();if(typeof Chart=='undefined')return;ch[id]=new Chart($(id),cfg)};
+const lg={position:'bottom',labels:{usePointStyle:true,pointStyle:'circle',boxWidth:8,padding:14}},gd=()=>({color:css('--bd')});
+const hc=(l,p,v)=>p?`<div class="h" style="border-color:${C.a}"><span>${l}</span><b>${v}</b><i>${esc(short(p.name))}（#${p.no}）</i></div>`:'';
+const L=(l,a,k,fmt,u,d)=>{const p=best(a,k,d);return hc(l,p,p?fmt(p[k])+(u||''):'')};
+const bar=(id,labels,sets,h,stack)=>mk(id,{type:'bar',data:{labels,datasets:sets.map(s=>({borderRadius:6,...s}))},options:{responsive:true,maintainAspectRatio:false,indexAxis:h?'y':'x',plugins:{legend:{display:sets.length>1,...lg}},scales:{x:{stacked:stack,grid:gd()},y:{stacked:stack,grid:gd(),ticks:{precision:0}}}}});
+const scat=(id,pts,rad,col,xl,yl,tip)=>mk(id,{type:'scatter',data:{datasets:[{data:pts,backgroundColor:col,pointRadius:rad}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>tip(i.raw.p)}}},scales:{x:{title:{display:true,text:xl},grid:gd()},y:{title:{display:true,text:yl},grid:gd()}}}});
+const radar=(label,d1,labels,d2)=>mk('c4',{type:'radar',data:{labels,datasets:[{label,data:d1,borderColor:C.v,backgroundColor:'rgba(139,92,246,.3)',borderWidth:3,pointRadius:3},{label:'チーム平均',data:d2,borderColor:C.a,backgroundColor:'rgba(107,155,255,.12)',borderDash:[5,4],borderWidth:2,pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:lg},scales:{r:{min:0,max:100,ticks:{display:false},grid:gd(),angleLines:gd(),pointLabels:{color:css('--tx'),font:{size:12,weight:'700'}}}}}});
+const pills=a=>$('pc').innerHTML=a.map(t=>`<span class="pill">${esc(t)}</span>`).join('');
+const cards=t=>t.forEach((x,i)=>{$('cd'+(i+1)).style.display=x?'':'none';if(x)$('t'+(i+1)).textContent=x});
+function head(t,main,small,sub,kp){$('ht').textContent=t;$('rec').innerHTML=`${main}<small>${small}</small>`;$('sub').textContent=sub;$('kp').innerHTML=kp.map(([a,b,c])=>`<div class="k"><span>${a}</span><b>${b}</b><i>${c}</i></div>`).join('')}
+function build(){const ss=[...new Set(['b','p','f'].flatMap(m=>RECS[m].map(x=>x.season)))];if(!ss.includes(st.season))st.season=ss[ss.length-1]||'';$('sn').innerHTML=ss.map(v=>`<option>${esc(v)}</option>`).join('');$('sn').value=st.season;$('sn').style.display=ss.length>1?'':'none';P=RECS[st.mode].filter(x=>x.season==st.season).map(DER[st.mode])}
+const rows=()=>P.filter(p=>(st.mode!='p'||p.act)&&(!st.g||p.grade==st.g)&&(!st.q||(p.name+p.no).includes(st.q)));
+// ---------- 打撃 ----------
+function renderB(R,Q,sel){
+ const T={ab:sum(R,'ab'),h:sum(R,'h'),tb:sum(R,'tb'),bb:sum(R,'bbh'),sf:sum(R,'sf'),sb:sum(R,'sb'),cs:sum(R,'cs')},obp=(T.h+T.bb)/(T.ab+T.bb+T.sf),slg=T.tb/T.ab;
+ head('チーム打撃',f3(T.h/T.ab),`チーム打率（OPS ${f3(obp+slg)}）`,`${T.ab}打数 ${T.h}安打 ／ 出塁率${f3(obp)} 長打率${f3(slg)} ／ ${R.length}名`,[['本塁打',sum(R,'hr'),'HR'],['打点',sum(R,'rbi'),'RBI'],['盗塁',T.sb,`成功率 ${T.sb+T.cs?(T.sb/(T.sb+T.cs)*100).toFixed(0):'-'}%`],['四死球',T.bb,'BB+HBP']]);
+ $('hl').innerHTML=L('首位打者',Q,'avg',f3)+L('最高出塁率',Q,'obp',f3)+L('最高OPS',Q,'ops',f3)+L('打点王',R,'rbi',String,'点')+L('盗塁王',R,'sb',String,'個')+L('本塁打王',R,'hr',String,'本');
+ cards([`打率ランキング（打数${st.mins.b}以上）`,'安打の内訳（安打数の多い順）','出塁率 × 長打率（円の大きさ＝打数）','選手詳細（チーム平均との比較）','盗塁の成功・失敗','学年別 チーム成績']);
+ const a1=[...Q].sort((x,y)=>y.avg-x.avg).slice(0,10);bar('c1',a1.map(p=>short(p.name)),[{data:a1.map(p=>+p.avg.toFixed(3)),backgroundColor:a1.map(p=>p.no==sel.no?C.v:C.a)}],1);
+ const a2=[...R].sort((x,y)=>y.h-x.h).slice(0,10);bar('c2',a2.map(p=>short(p.name)),[['単打','s1',C.a],['二塁打','d2',C.w],['三塁打','d3',C.d],['本塁打','hr',C.l]].map(([l,k,c])=>({label:l,data:a2.map(p=>p[k]),backgroundColor:c})),1,1);
+ scat('c3',Q.map(p=>({x:p.slg,y:p.obp,p})),Q.map(p=>Math.sqrt(p.ab)*.8+3),Q.map(p=>p.no==sel.no?C.v:C.a+'bb'),'長打率','出塁率',p=>`${short(p.name)} 出塁率${f3(p.obp)} 長打率${f3(p.slg)}`);
+ const ms=[['打率','avg'],['出塁率','obp'],['長打率','slg'],['得点圏','risp'],['盗塁','sb'],['打点','rbi']],mx=ms.map(([,k])=>Math.max(...R.map(p=>p[k]))||1),av=ms.map(([,k])=>R.reduce((s,p)=>s+p[k],0)/R.length);
+ pills([`#${sel.no} ${short(sel.name)}`,sel.grade,`打率 ${f3(sel.avg)}`,`OPS ${f3(sel.ops)}`,`打点 ${sel.rbi}`,`盗塁 ${sel.sb}`]);
+ radar(short(sel.name),ms.map(([,k],i)=>+(sel[k]/mx[i]*100).toFixed(0)),ms.map(m=>m[0]),av.map((v,i)=>+(v/mx[i]*100).toFixed(0)));
+ const a5=[...R].filter(p=>p.sb>0).sort((x,y)=>y.sb-x.sb).slice(0,10);bar('c5',a5.map(p=>short(p.name)),[{label:'成功',data:a5.map(p=>p.sb),backgroundColor:C.w},{label:'盗塁刺',data:a5.map(p=>p.cs),backgroundColor:C.l}],1,1);
+ const gs=['6年','5年','4年','3年','2年','1年'].filter(g=>P.some(p=>p.grade==g)),gt=g=>{const a=P.filter(p=>p.grade==g),ab=sum(a,'ab'),h=sum(a,'h'),b=sum(a,'bbh'),sf=sum(a,'sf'),tb=sum(a,'tb');return{avg:ab?h/ab:0,obp:(h+b)/Math.max(1,ab+b+sf),slg:ab?tb/ab:0}};
+ bar('c6',gs.map(g=>g+`（${P.filter(p=>p.grade==g).length}名）`),[['打率','avg',C.a],['出塁率','obp',C.w],['長打率','slg',C.d]].map(([l,k,c])=>({label:l,data:gs.map(g=>+gt(g)[k].toFixed(3)),backgroundColor:c})))}
+// ---------- 投手 ----------
+function renderP(R,Q,sel){
+ const o=sum(R,'outs'),d=o/3,er=sum(R,'er'),h=sum(R,'h'),bb=sum(R,'bb'),hb=sum(R,'hbp'),bf=sum(R,'bf');
+ head('チーム投手',f2(d?er*9/d:0),'チーム防御率（9回換算）',`${ipf(o)}回 自責点${er} ／ WHIP ${f2(d?(h+bb)/d:0)} 被打率 ${f3(bf-bb-hb>0?h/(bf-bb-hb):0)}（概算） ／ ${R.length}名`,[['勝',sum(R,'w'),'WIN'],['敗',sum(R,'l'),'LOSE'],['セーブ',sum(R,'sv'),'SAVE'],['奪三振',sum(R,'so'),`与四死球 ${bb+hb}`]]);
+ $('hl').innerHTML=L('防御率1位',Q,'era',f2,'',-1)+L('WHIP最少',Q,'whip',f2,'',-1)+L('最多勝',R,'w',String,'勝')+L('最多奪三振',R,'so',String,'個')+L('最多セーブ',R,'sv',String,'S')+L('最多投球回',R,'outs',v=>ipf(v),'回');
+ cards([`防御率ランキング（${st.mins.p}回以上・低いほど良い）`,'奪三振と与四死球（投球回の多い順）','奪三振率 × 与四球率（9回あたり・左上ほど良い）','選手詳細（チーム平均との比較）','勝・敗・セーブ','学年別 投球回と奪三振']);
+ const a1=[...Q].sort((x,y)=>x.era-y.era).slice(0,10);bar('c1',a1.map(p=>short(p.name)),[{data:a1.map(p=>+p.era.toFixed(2)),backgroundColor:a1.map(p=>p.no==sel.no?C.v:C.a)}],1);
+ const a2=[...R].sort((x,y)=>y.outs-x.outs).slice(0,8);bar('c2',a2.map(p=>short(p.name)),[{label:'奪三振',data:a2.map(p=>p.so),backgroundColor:C.w},{label:'与四死球',data:a2.map(p=>p.bb+p.hbp),backgroundColor:C.l}]);
+ scat('c3',Q.map(p=>({x:p.bb9,y:p.k9,p})),Q.map(p=>Math.sqrt(p.ipd)*.9+3),Q.map(p=>p.no==sel.no?C.v:C.a+'bb'),'与四球率（9回あたり）','奪三振率（9回あたり）',p=>`${short(p.name)} K/9 ${f2(p.k9)} BB/9 ${f2(p.bb9)}`);
+ const ms=[['奪三振率','k9',0],['制球','bb9',1],['防御率','era',1],['WHIP','whip',1],['被打率','ba',1],['投球回','ipd',0]],sc=(p,[,k,inv])=>{const m=Math.max(...R.map(x=>x[k]))||1;return +((inv?1-p[k]/m:p[k]/m)*100).toFixed(0)},qq=Q.length?Q:R;
+ pills([`#${sel.no} ${short(sel.name)}`,sel.grade,`${ipf(sel.outs)}回`,`防御率 ${f2(sel.era)}`,`${sel.w}勝${sel.l}敗${sel.sv}S`,`奪三振 ${sel.so}`]);
+ radar(short(sel.name),ms.map(m=>sc(sel,m)),ms.map(m=>m[0]),ms.map(m=>Math.round(qq.reduce((s,p)=>s+sc(p,m),0)/qq.length)));
+ const a5=[...R].filter(p=>p.w+p.l+p.sv>0).sort((x,y)=>y.w-x.w||y.sv-x.sv).slice(0,10);bar('c5',a5.map(p=>short(p.name)),[['勝','w',C.w],['敗','l',C.l],['セーブ','sv',C.d]].map(([l,k,c])=>({label:l,data:a5.map(p=>p[k]),backgroundColor:c})),1,1);
+ const gs=['6年','5年','4年','3年','2年','1年'].filter(g=>R.some(p=>p.grade==g));
+ bar('c6',gs,[{label:'投球回',data:gs.map(g=>+sum(R.filter(p=>p.grade==g),'ipd').toFixed(1)),backgroundColor:C.a},{label:'奪三振',data:gs.map(g=>sum(R.filter(p=>p.grade==g),'so')),backgroundColor:C.w}])}
+// ---------- 守備 ----------
+function renderF(R,Q,sel){
+ const fp=R.filter(p=>p.fpct>0),av=fp.length?fp.reduce((s,p)=>s+p.fpct,0)/fp.length:0;
+ head('チーム守備',String(sum(R,'err')),'チーム失策数',`捕逸${sum(R,'pb')} ／ 盗塁阻止${sum(R,'cs')} ／ 守備率の平均 ${f3(av)} ／ ${R.length}名`,[['失策',sum(R,'err'),'E'],['捕逸',sum(R,'pb'),'PB'],['盗塁阻止',sum(R,'cs'),'CS'],['守備率平均',f3(av),'記録のある選手']]);
+ $('hl').innerHTML=L('守備率1位',fp,'fpct',f3)+L('盗塁阻止数1位',R,'cs',String,'個')+L('盗塁阻止率1位',R,'csp',f3)+L('失策数が最少（守備率あり）',fp,'err',String,'個',-1);
+ cards(['守備率ランキング','失策・捕逸（多い順）','失策数 × 守備率（左上ほど良い）',null,'盗塁阻止・捕逸（捕手の記録）',null]);
+ const a1=[...fp].sort((x,y)=>y.fpct-x.fpct).slice(0,10);bar('c1',a1.map(p=>short(p.name)),[{data:a1.map(p=>p.fpct),backgroundColor:a1.map(p=>p.no==sel.no?C.v:C.a)}],1);
+ const a2=[...R].sort((x,y)=>y.err+y.pb-x.err-x.pb).slice(0,10);bar('c2',a2.map(p=>short(p.name)),[{label:'失策',data:a2.map(p=>p.err),backgroundColor:C.l},{label:'捕逸',data:a2.map(p=>p.pb),backgroundColor:C.d}],1,1);
+ scat('c3',fp.map(p=>({x:p.err,y:p.fpct,p})),7,fp.map(p=>p.no==sel.no?C.v:C.a+'bb'),'失策数','守備率',p=>`${short(p.name)} 守備率${f3(p.fpct)} 失策${p.err}`);
+ const a5=[...R].filter(p=>p.cs>0||p.pb>0).sort((x,y)=>y.cs-x.cs);bar('c5',a5.map(p=>short(p.name)),[{label:'盗塁阻止',data:a5.map(p=>p.cs),backgroundColor:C.w},{label:'捕逸',data:a5.map(p=>p.pb),backgroundColor:C.l}])}
+const RENDER={b:renderB,p:renderP,f:renderF};
+function render(){
+ if(typeof Chart!='undefined'){Chart.defaults.color=css('--mu');Chart.defaults.font.family='"Hiragino Sans","Yu Gothic",Meiryo,sans-serif';Object.assign(Chart.defaults.plugins.tooltip,{backgroundColor:'rgba(8,12,24,.94)',titleColor:'#fff',bodyColor:'#cfd8ee',padding:12,cornerRadius:12,boxPadding:5})}
+ const m=st.mode,mi=MINS[m],cols=COLS[m],sk=st.sk[m],sd=st.sd[m];
+ document.querySelectorAll('#md button').forEach(b=>b.classList.toggle('on',b.dataset.v==m));
+ $('mn').style.display=mi?'':'none';if(mi){$('mn').innerHTML=mi.opts.map(([v,l])=>`<option value="${v}">${l}</option>`).join('');$('mn').value=st.mins[m]}
+ $('nt').textContent=NOTE[m]+(API?'':'')+'　列見出しタップで並び替え／行をタップすると選手詳細に反映。';
+ $('hr').innerHTML=cols.map(c=>`<th data-k="${c[1]}"${c[1]?'':' class="eo"'}>${c[0]}<span>${sk==c[1]?(sd>0?' ▲':' ▼'):''}</span></th>`).join('');
+ document.querySelectorAll('th').forEach(h=>h.onclick=()=>{const k=h.dataset.k;if(!k)return;st.sd[m]=st.sk[m]==k?-st.sd[m]:(ASC[m].includes(k)?1:-1);st.sk[m]=k;render()});
+ const R=rows();
+ if(!R.length){$('tb').innerHTML=`<tr><td class="empty" colspan="${cols.length}">該当する選手がいません</td></tr>`;$('cn').textContent='（0名）';return}
+ const sel=P.find(p=>p.no==st.sel&&R.includes(p))||R[0],Q=mi?R.filter(p=>p[mi.k]>=st.mins[m]):R;
+ RENDER[m](R,Q,sel);
+ const r=[...R].sort((a,b)=>{const x=a[sk],y=b[sk];return (x>y?1:x<y?-1:0)*sd});
+ $('cn').textContent=`（${r.length}名）`;
+ $('tb').innerHTML=r.map(p=>`<tr data-no="${p.no}" class="${p.no==sel.no?'sel':''}">`+cols.map(c=>{if(!c[1])return `<td class="eo"><button class="mini" data-e="${p.no}">編集</button> <button class="mini del" data-x="${p.no}">削除</button></td>`;const v=p[c[1]],t=FMT[c[1]]?FMT[c[1]](v):typeof v=='string'?esc(v):v,low=mi&&p[mi.k]<st.mins[m]&&RATEK[m].includes(c[1]);return `<td class="${c[1]=='name'?'top':''}${low?' q':''}">${t}</td>`}).join('')+'</tr>').join('')}
+document.querySelectorAll('#md button').forEach(b=>b.onclick=()=>{st.mode=b.dataset.v;build();render()});
+$('sn').onchange=e=>{st.season=e.target.value;build();render()};$('gr').onchange=e=>{st.g=e.target.value;render()};$('mn').onchange=e=>{st.mins[st.mode]=+e.target.value;render()};$('q').oninput=e=>{st.q=e.target.value.trim();render()};
+$('th').onclick=()=>{const dk=document.documentElement.dataset.theme=='dark';document.documentElement.dataset.theme=dk?'':'dark';$('th').textContent=dk?'🌙 ダーク':'☀️ ライト';render()};
+// ---------- 更新・編集（Googleスプレッドシート連携） ----------
+const API_CONST='',CK='kisseki_players_cache2';
+const API_URL=(()=>{let u='';try{const q=new URLSearchParams(location.search).get('api');if(q){localStorage.setItem('kisseki_players_api',q);u=q}else u=localStorage.getItem('kisseki_players_api')||''}catch(e){}return API_CONST||u})(),API=!!API_URL;
+let TOKEN='',TEXP=0,editKey=null,tt,lastAt=0;
+try{const c=JSON.parse(localStorage.getItem(CK)||'null');if(API&&c&&c.b&&c.b.length)RECS=c}catch(e){}
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2800)}
+function setList(r){if(!r||!r.b)return false;RECS={b:r.b,p:r.p||[],f:r.f||[]};lastAt=Date.now();try{localStorage.setItem(CK,JSON.stringify(RECS))}catch(e){}$('sync').textContent=' ／ 🔄 '+new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})+' 更新';return true}
+async function refresh(q){try{const r=await(await fetch(API_URL+'?action=list')).json();if(!setList(r))throw new Error('bad response');build();if(!q)render();return true}catch(e){console.error(e);toast('最新データを取得できませんでした（前回のデータを表示）');return false}}
+async function rawPost(action,body){const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action,...body})});return r.json()}
+async function apiPost(action,body){
+ let r;try{r=await rawPost(action,{token:TOKEN,mode:st.mode,...body})}catch(e){console.error(e);toast('通信に失敗しました');throw e}
+ if(r.b){setList(r);build();render()}
+ if(r.ok)return r;
+ if(r.error=='auth'){logout(true);toast('編集の有効期限が切れました。もう一度ログインしてください')}
+ else if(r.error=='conflict')toast('他の人が先に更新しました。最新の内容を読み込みました。もう一度操作してください')
+ else if(r.error=='notfound')toast('対象の選手が見つかりません。最新の内容を読み込みました')
+ else toast(r.msg||'エラーが発生しました');
+ throw new Error(r.error)}
+const fv=k=>{const v=$('f_'+k).value;return v===''?0:+v};
+function calcF(){const m=st.mode,o={name:'',grade:''};FLD[m].forEach(([k])=>o[k]=fv(k));
+ if(m=='b'){const d=DER.b({...o,risp:0,sh:o.sh,sf:o.sf});$('pv').innerHTML=`安打 ${d.h} ／ 打席 ${d.pa} ／ 打率 ${f3(d.avg)} ／ 出塁率 ${f3(d.obp)} ／ 長打率 ${f3(d.slg)} ／ OPS ${f3(d.ops)}`+(d.h>o.ab?'<br><span style="color:var(--l)">安打数が打数を超えています</span>':'')}
+ else if(m=='p'){const d=DER.p(o);$('pv').innerHTML=`${ipf(d.outs)}回 ／ 防御率 ${f2(d.era)} ／ WHIP ${f2(d.whip)} ／ 被打率 ${f3(d.ba)}`+(o.er>o.r?'<br><span style="color:var(--l)">自責点が失点を超えています</span>':'')}
+ else $('pv').textContent='守備率・盗塁阻止率は 0〜1 の小数で入力します（例 0.875）'}
+function openForm(no){
+ const m=st.mode,x=no==null?null:RECS[m].find(r=>r.season==st.season&&r.no==no);editKey=x?{season:x.season,no:x.no,u:x.u}:null;
+ $('mt').textContent=(x?'編集：':'追加：')+LB[m];$('dl_s').innerHTML=[...new Set(RECS.b.map(r=>r.season))].map(v=>`<option value="${esc(v)}">`).join('');
+ $('fg2').innerHTML=FLD[m].map(([k,l,t])=>`<label>${l}<input type="number" id="f_${k}" min="0"${t=='rate'?' max="1" step="0.001"':t=='ip'?' step="0.1"':''} inputmode="decimal"></label>`).join('');
+ $('f_season').value=x?x.season:st.season;$('f_name').value=x?x.name:'';$('f_no').value=x?x.no:'';$('f_grade').value=x?x.grade:'6年';
+ FLD[m].forEach(([k])=>$('f_'+k).value=x?x[k]:'');calcF();$('ov').classList.add('on')}
+const closeF=()=>$('ov').classList.remove('on');
+async function saveF(){
+ const m=st.mode,rec={season:$('f_season').value.trim(),name:$('f_name').value.trim(),no:$('f_no').value===''?NaN:+$('f_no').value,grade:$('f_grade').value};FLD[m].forEach(([k])=>rec[k]=fv(k));
+ if(!rec.season||!rec.name||isNaN(rec.no)){toast('シーズン・選手名・背番号を入力してください');return}
+ if(m=='b'&&rec.s1+rec.d2+rec.d3+rec.hr>rec.ab){toast('安打数が打数を超えています');return}
+ if(m=='p'){const fr=Math.round((rec.ip-Math.floor(rec.ip+1e-9))*10);if(fr>2||Math.abs((rec.ip*10)-Math.round(rec.ip*10))>1e-6){toast('投球回の小数は .1 .2 で入力してください（例 3.2）');return}if(rec.er>rec.r){toast('自責点が失点を超えています');return}}
+ $('f_save').disabled=true;
+ try{await apiPost('upsert',{p:{...rec,orig:editKey,u:editKey?editKey.u:''}});st.season=rec.season;st.sel=rec.no;build();closeF();render();toast(editKey?'更新しました':'追加しました')}catch(e){}finally{$('f_save').disabled=false}}
+$('add').onclick=()=>openForm();$('f_cancel').onclick=closeF;$('f_save').onclick=saveF;$('ov').onclick=e=>{if(e.target==$('ov'))closeF()};
+$('ov').addEventListener('input',e=>{if(e.target.id=='f_no'&&!$('f_name').value){const n=+e.target.value,x=[...RECS.b,...RECS.p,...RECS.f].find(r=>r.no==n&&r.season==$('f_season').value);if(x){$('f_name').value=x.name;$('f_grade').value=x.grade}}if(e.target.id!='f_name')calcF()});
+$('tb').onclick=e=>{const b=e.target.closest('button');
+ if(b){if(b.dataset.e)openForm(+b.dataset.e);
+  if(b.dataset.x&&confirm('この選手の記録（'+LB[st.mode]+'）を削除しますか？')){const o=RECS[st.mode].find(r=>r.season==st.season&&r.no==+b.dataset.x);apiPost('delete',{season:st.season,no:+b.dataset.x,u:o?o.u:''}).then(()=>toast('削除しました')).catch(()=>{})}return}
+ const tr=e.target.closest('tr[data-no]');if(tr){st.sel=+tr.dataset.no;render()}};
+function setEdit(on){document.body.classList.toggle('edit',!!on);$('lock').textContent=on?'🔓 編集中（終了）':'🔒 編集モード'}
+function logout(q){TOKEN='';TEXP=0;try{sessionStorage.removeItem('kt2');sessionStorage.removeItem('ke2')}catch(e){}setEdit(false);if(!q)toast('編集モードを終了しました')}
+const closeL=()=>$('ov3').classList.remove('on');
+async function login(){const pm=$('pm');pm.style.display='';pm.textContent='確認中…';
+ try{const r=await rawPost('login',{pass:$('pw').value});
+  if(r.ok){TOKEN=r.token;TEXP=r.exp;try{sessionStorage.setItem('kt2',TOKEN);sessionStorage.setItem('ke2',TEXP)}catch(e){}setEdit(true);closeL();toast('編集モードになりました');return}
+  pm.textContent=r.error=='locked'?'失敗が続いたため、一時的にロックされています。しばらくしてからお試しください。':r.error=='notconfigured'?'合言葉が未設定です（管理者の設定が必要です）。':'合言葉が違います。'}
+ catch(e){console.error(e);pm.textContent='通信に失敗しました。'}}
+if(!API){$('lock').style.display='none';$('rf').style.display='none';$('sync').textContent=' ／ 連携未設定（埋め込みデータ）'}
+else{try{TOKEN=sessionStorage.getItem('kt2')||'';TEXP=+sessionStorage.getItem('ke2')||0}catch(e){}if(TOKEN&&TEXP<Date.now())TOKEN='';setEdit(!!TOKEN);
+ $('lock').onclick=()=>{if(TOKEN)logout();else{$('pw').value='';$('pm').style.display='none';$('ov3').classList.add('on');$('pw').focus()}};
+ $('pw_c').onclick=closeL;$('pw_ok').onclick=login;$('pw').onkeydown=e=>{if(e.key=='Enter')login()};
+ $('rf').onclick=async()=>{$('rf').disabled=true;if(await refresh())toast('最新データを取得しました');$('rf').disabled=false};
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-lastAt>60000)refresh()})}
+document.addEventListener('keydown',e=>{if(e.key=='Escape'){closeF();closeL()}});
+const CHARTJS_URL='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
+function loadChartJs(){return new Promise((res,rej)=>{if(typeof Chart!=='undefined'){res();return}const s=document.createElement('script');s.src=CHARTJS_URL;s.async=true;s.onload=()=>res();s.onerror=()=>rej(new Error('Chart.js の読み込みに失敗しました: '+CHARTJS_URL));document.head.appendChild(s)})}
+document.addEventListener('DOMContentLoaded',()=>{build();Promise.all([loadChartJs().catch(e=>console.error(e)),API?refresh(true):Promise.resolve()]).then(()=>{build();render()})});
+</script></body></html>
